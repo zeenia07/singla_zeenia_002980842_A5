@@ -5,6 +5,12 @@
  */
 package userinterface.SystemAdminWorkArea;
 
+import Business.Customer.Customer;
+import Business.EcoSystem;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author Dell
@@ -14,8 +20,18 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageCustomersPanel
      */
-    public ManageCustomersPanel() {
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private EcoSystem ecosystem;
+    private Customer customer;
+    public ManageCustomersPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;        
+        this.account = account;
+        this.ecosystem = ecosystem;
+        //populateComboBox();
+        //populateTable();
+        
     }
 
     /**
@@ -238,6 +254,10 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+       SystemAdminWorkAreaJPanel  systemAdminWorkAreaJPanel = new SystemAdminWorkAreaJPanel(userProcessContainer, account, ecosystem);
+       userProcessContainer.add("systemAdminWorkAreaJPanel", systemAdminWorkAreaJPanel);
+       CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+       layout.next(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
 

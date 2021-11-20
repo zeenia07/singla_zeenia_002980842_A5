@@ -5,6 +5,12 @@
  */
 package userinterface.RestaurantAdminRole;
 
+import Business.EcoSystem;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JPanel;
+import userinterface.SystemAdminWorkArea.SystemAdminWorkAreaJPanel;
+
 /**
  *
  * @author Dell
@@ -14,8 +20,14 @@ public class ManageOrdersPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageOrdersPanel
      */
-    public ManageOrdersPanel() {
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    private EcoSystem ecosystem;
+    public ManageOrdersPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;        
+        this.account = account;
+        this.ecosystem = ecosystem;
     }
 
     /**
@@ -204,6 +216,10 @@ public class ManageOrdersPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+       AdminWorkAreaJPanel  adminWorkAreaJPanel = new AdminWorkAreaJPanel(userProcessContainer, account, ecosystem);
+       userProcessContainer.add("adminWorkAreaJPanel", adminWorkAreaJPanel);
+       CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+       layout.next(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnAssignDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignDeliveryActionPerformed

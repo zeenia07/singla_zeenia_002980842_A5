@@ -5,6 +5,16 @@
  */
 package userinterface.RestaurantAdminRole;
 
+import Business.DB4OUtil.DB4OUtil;
+import Business.EcoSystem;
+import Business.Restaurant.Item;
+import Business.Restaurant.Menu;
+import Business.UserAccount.UserAccount;
+import java.awt.CardLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Dell
@@ -14,8 +24,16 @@ public class ManageMenuPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageMenuPanel
      */
-    public ManageMenuPanel() {
+    EcoSystem ecosystem;
+    private JPanel userProcessContainer;
+    private UserAccount account;
+    public ManageMenuPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem) {
         initComponents();
+        this.userProcessContainer = userProcessContainer;        
+        this.account = account;
+        this.ecosystem = ecosystem;
+        DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+        ecosystem = dB4OUtil.retrieveSystem();
     }
 
     /**
@@ -86,6 +104,9 @@ public class ManageMenuPanel extends javax.swing.JPanel {
 
         lblCID.setText("Item ID:");
 
+        txtCID.setEditable(false);
+        txtCID.setEnabled(false);
+
         btnAddCust.setText("Create");
         btnAddCust.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,17 +136,14 @@ public class ManageMenuPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jScrollPane1)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnViewCust)))
+                            .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnViewCust, javax.swing.GroupLayout.Alignment.TRAILING))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -194,6 +212,10 @@ public class ManageMenuPanel extends javax.swing.JPanel {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
+       AdminWorkAreaJPanel  adminWorkAreaJPanel = new AdminWorkAreaJPanel(userProcessContainer, account, ecosystem);
+       userProcessContainer.add("adminWorkAreaJPanel", adminWorkAreaJPanel);
+       CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+       layout.next(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnDeleteCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCustActionPerformed
@@ -201,7 +223,14 @@ public class ManageMenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnDeleteCustActionPerformed
 
     private void btnAddCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustActionPerformed
-        // TODO add your handling code here:
+        int id = Integer.parseInt(txtCID.getText());
+        String name = txtCName.getText();
+        String type = txtItemType.getText();
+        double price = Double.parseDouble(txtItemPrice.getText());
+        
+        Menu menu = new Menu();
+        Item item = new Item(id, name, type, price);
+        
     }//GEN-LAST:event_btnAddCustActionPerformed
 
     private void btnModifyCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyCustActionPerformed
@@ -209,10 +238,26 @@ public class ManageMenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnModifyCustActionPerformed
 
     private void btnViewCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewCustActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnViewCustActionPerformed
 
 
+    public void populateTable(int restId){
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+
+        model.setRowCount(0);
+        
+            for (Item item : ecosystem.getRestaurantDirectory().getRestaurantList().get(restId).getMenu().getItemList()) {
+                Object[] row = new Object[5];
+                row[0] = item.getItemId();
+                row[1] = item.getItemName();
+                row[2] = item.getItemType();
+                row[3] = item.getPrice();
+
+                model.addRow(row);
+            }  
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCust;
     private javax.swing.JButton btnBack;
