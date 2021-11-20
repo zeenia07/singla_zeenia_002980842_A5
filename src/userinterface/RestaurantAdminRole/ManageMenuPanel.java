@@ -9,8 +9,11 @@ import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Restaurant.Item;
 import Business.Restaurant.Menu;
+import Business.Restaurant.Restaurant;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
@@ -27,11 +30,23 @@ public class ManageMenuPanel extends javax.swing.JPanel {
     EcoSystem ecosystem;
     private JPanel userProcessContainer;
     private UserAccount account;
+    Restaurant restName;
+    
     public ManageMenuPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem) {
         initComponents();
         this.userProcessContainer = userProcessContainer;        
         this.account = account;
         this.ecosystem = ecosystem;
+      
+        DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+        ecosystem = dB4OUtil.retrieveSystem();
+    }
+    public ManageMenuPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem,  Restaurant restName) {
+        initComponents();
+        this.userProcessContainer = userProcessContainer;        
+        this.account = account;
+        this.ecosystem = ecosystem;
+        this.restName=restName;
         DB4OUtil dB4OUtil = DB4OUtil.getInstance();
         ecosystem = dB4OUtil.retrieveSystem();
     }
@@ -49,14 +64,14 @@ public class ManageMenuPanel extends javax.swing.JPanel {
         btnBack = new javax.swing.JButton();
         btnDeleteCust = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblViewMenu = new javax.swing.JTable();
         lblCName = new javax.swing.JLabel();
         txtCName = new javax.swing.JTextField();
         lblItemName = new javax.swing.JLabel();
         txtItemType = new javax.swing.JTextField();
         lblCID = new javax.swing.JLabel();
         txtCID = new javax.swing.JTextField();
-        btnAddCust = new javax.swing.JButton();
+        btnAddItem = new javax.swing.JButton();
         lblItemPrice = new javax.swing.JLabel();
         btnModifyCust = new javax.swing.JButton();
         txtItemPrice = new javax.swing.JTextField();
@@ -85,7 +100,7 @@ public class ManageMenuPanel extends javax.swing.JPanel {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblViewMenu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -96,7 +111,7 @@ public class ManageMenuPanel extends javax.swing.JPanel {
                 "Item ID", "Item Name", "Item Type", "Price"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblViewMenu);
 
         lblCName.setText("Item Name:");
 
@@ -107,10 +122,10 @@ public class ManageMenuPanel extends javax.swing.JPanel {
         txtCID.setEditable(false);
         txtCID.setEnabled(false);
 
-        btnAddCust.setText("Create");
-        btnAddCust.addActionListener(new java.awt.event.ActionListener() {
+        btnAddItem.setText("Create");
+        btnAddItem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddCustActionPerformed(evt);
+                btnAddItemActionPerformed(evt);
             }
         });
 
@@ -166,7 +181,7 @@ public class ManageMenuPanel extends javax.swing.JPanel {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnAddCust)
+                                .addComponent(btnAddItem)
                                 .addGap(26, 26, 26)
                                 .addComponent(btnModifyCust)
                                 .addGap(18, 18, 18)
@@ -203,7 +218,7 @@ public class ManageMenuPanel extends javax.swing.JPanel {
                     .addComponent(txtItemPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddCust)
+                    .addComponent(btnAddItem)
                     .addComponent(btnModifyCust)
                     .addComponent(btnDeleteCust))
                 .addGap(103, 103, 103))
@@ -222,16 +237,39 @@ public class ManageMenuPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnDeleteCustActionPerformed
 
-    private void btnAddCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustActionPerformed
-        int id = Integer.parseInt(txtCID.getText());
+    private void btnAddItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddItemActionPerformed
+//        int id = Integer.parseInt(txtCID.getText());
         String name = txtCName.getText();
         String type = txtItemType.getText();
         double price = Double.parseDouble(txtItemPrice.getText());
         
-        Menu menu = new Menu();
-        Item item = new Item(id, name, type, price);
+//        Menu menu = new Menu();
+//        Item item = new Item(id, name, type, price);
         
-    }//GEN-LAST:event_btnAddCustActionPerformed
+        
+        
+       // String itemName = txtItemName.getText();
+       // double price = Double.parseDouble(txtPrice.getText());
+        try{
+            int selectedRowIndex = tblViewMenu.getSelectedRow();
+            if(selectedRowIndex < 0){
+                throw new Exception("No row selected in table");
+                
+            }
+//            DefaultTableModel model = (DefaultTableModel) tblViewMenu.getModel();
+//            Item selectedItem = (Item)model.getValueAt(selectedRowIndex, 0);
+//        
+//            this.restName.getMenu().getItemList().get(selectedRowIndex).setItemName(name);
+//            this.restName.getMenu().getItemList().get(selectedRowIndex).setPrice(price);
+//            JOptionPane.showMessageDialog(this, "Updated the entry Successfully");
+                    
+        }catch(Exception e){
+            this.restName.getMenu().addItem(name,type, price, this.restName.getName());
+            JOptionPane.showMessageDialog(this, "Added the entry Successfully");
+        }
+        this.populateMenu();
+        
+    }//GEN-LAST:event_btnAddItemActionPerformed
 
     private void btnModifyCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyCustActionPerformed
         // TODO add your handling code here:
@@ -242,38 +280,72 @@ public class ManageMenuPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_btnViewCustActionPerformed
 
 
-    public void populateTable(int restId){
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-
+//    public void populateTable(int restId){
+//        DefaultTableModel model = (DefaultTableModel) tblViewMenu.getModel();
+//
+//        model.setRowCount(0);
+//        
+//            for (Item item : ecosystem.getRestaurantDirectory().getRestaurantList().get(restId).getMenu().getItemList()) {
+//                Object[] row = new Object[5];
+//                row[0] = item.getItemId();
+//                row[1] = item.getItemName();
+//                row[2] = item.getItemType();
+//                row[3] = item.getPrice();
+//
+//                model.addRow(row);
+//            }  
+//    }
+//    
+//     private int getUniqueId() {
+//        
+//        int randomPIN = (int)(Math.random()*9000)+1000;
+//        for(Patient patient : patientDirectory.getPatientList()){
+//            if(patient.getPatientId() == randomPIN){
+//            getUniqueId();
+//            }
+//        }
+//        return randomPIN;
+//    }
+    
+    private void populateMenu(){
+        DefaultTableModel model = (DefaultTableModel) tblViewMenu.getModel();
         model.setRowCount(0);
+        List<Item> itemList;
+        try{
+            itemList = this.restName.getMenu().getItemList();
+        }catch(Exception e){
+            itemList = new ArrayList<Item>();
+        }
         
-            for (Item item : ecosystem.getRestaurantDirectory().getRestaurantList().get(restId).getMenu().getItemList()) {
-                Object[] row = new Object[5];
-                row[0] = item.getItemId();
-                row[1] = item.getItemName();
-                row[2] = item.getItemType();
-                row[3] = item.getPrice();
-
-                model.addRow(row);
-            }  
-    }
+        for(Item item : itemList){
+            Object[] row = new Object[2];
+            //row[0] = item;
+            row[0] = item;
+            row[1] = item.getItemType();
+            row[2] = item.getPrice();
+            
+            model.addRow(row);
+        }
+}
+  
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddCust;
+    private javax.swing.JButton btnAddItem;
     private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDeleteCust;
     private javax.swing.JButton btnModifyCust;
     private javax.swing.JButton btnViewCust;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCID;
     private javax.swing.JLabel lblCName;
     private javax.swing.JLabel lblItemName;
     private javax.swing.JLabel lblItemPrice;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable tblViewMenu;
     private javax.swing.JTextField txtCID;
     private javax.swing.JTextField txtCName;
     private javax.swing.JTextField txtItemPrice;
     private javax.swing.JTextField txtItemType;
     // End of variables declaration//GEN-END:variables
 }
+

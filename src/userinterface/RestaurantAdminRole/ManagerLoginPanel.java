@@ -5,7 +5,10 @@
  */
 package userinterface.RestaurantAdminRole;
 
+import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
+import Business.Employee.Employee;
+import Business.Role.AdminRole;
 import Business.UserAccount.UserAccount;
 import Business.UserAccount.UserAccountDirectory;
 import java.awt.CardLayout;
@@ -149,10 +152,19 @@ public class ManagerLoginPanel extends javax.swing.JPanel {
     private void loginJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginJButtonActionPerformed
         // Get user name
         System.out.println("sdfvb");
+         DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+        EcoSystem system = dB4OUtil.retrieveSystem();
+        UserAccount user1 = new UserAccountDirectory().createUserAccount("manager01", "manager01", new Employee(), new AdminRole());
+        UserAccountDirectory userAccountDirectory = new UserAccountDirectory();
+        userAccountDirectory.getUserAccountList().add(user1);
+        system.setUserAccountDirectory(userAccountDirectory);
+        dB4OUtil.storeSystem(system);
              String userName = userNameJTextField.getText();
         char[] passwordCharArray = passwordField.getPassword();
         String password = String.valueOf(passwordCharArray);
-        AdminWorkAreaJPanel  adminWorkAreaJPanel = new AdminWorkAreaJPanel (userProcessContainer, account, ecosystem);
+        UserAccount userAccount = ecosystem.getUserAccountDirectory()
+              .authenticateUser(userName, password);
+        AdminWorkAreaJPanel  adminWorkAreaJPanel = new AdminWorkAreaJPanel (userProcessContainer, userAccount, ecosystem);
        userProcessContainer.add("adminWorkAreaJPanel", adminWorkAreaJPanel);
         CardLayout layout = (CardLayout)userProcessContainer.getLayout();
 //            SystemAdminWorkAreaJPanel systemAdminWorkAreaJPanel = new SystemAdminWorkAreaJPanel(container,system);
@@ -160,8 +172,7 @@ public class ManagerLoginPanel extends javax.swing.JPanel {
             layout.next(userProcessContainer);
             
 
-        //        UserAccount userAccount = system.getUserAccountDirectory()
-        //        .authenticateUser(userName, password);
+       
         //
         //        if (userAccount == null) {
             //            JOptionPane.showMessageDialog(null, "Invalid credentials");

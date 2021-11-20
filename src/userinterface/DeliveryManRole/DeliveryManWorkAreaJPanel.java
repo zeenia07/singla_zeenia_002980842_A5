@@ -5,10 +5,12 @@
 package userinterface.DeliveryManRole;
 
 import Business.EcoSystem;
+import Business.Restaurant.Order;
 
 import Business.UserAccount.UserAccount;
 import Business.WorkQueue.WorkRequest;
 import java.awt.CardLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,7 +41,28 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
     
     public void populateTable(){
         
-    }
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
+        model.setRowCount(0);
+        
+        for(Order o : this.business.getOrderDirectory().getOrderList()){
+//            System.out.println(this.userAccount.getUsername());
+//            System.out.println(o.getDeliveryMan());
+            if((this.userAccount.getUsername().equals(o.getDeliveryMan()))
+                    && (o.getOrderStatus().equals("Delivery Assigned") ||
+                           o.getOrderStatus().equals("Order Picked up") ||
+                    o.getOrderStatus().equals("Delivered")));
+                Object[] row = new Object[5];
+                row[0] = o;
+                row[1] = o.getMessage();
+                row[1] = o.getSender().getUsername();
+                row[2] = o.getReceiver().getUsername();
+                row[3] = o.getOrderStatus();
+               
+                model.addRow(row);
+            }
+        }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,20 +84,20 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
 
         workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Message", "Sender", "Receiver", "Status"
+                "Order ID", "Message", "Sender", "Receiver", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, true, true, false
+                true, false, true, true, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -87,10 +110,10 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(workRequestJTable);
         if (workRequestJTable.getColumnModel().getColumnCount() > 0) {
-            workRequestJTable.getColumnModel().getColumn(0).setResizable(false);
             workRequestJTable.getColumnModel().getColumn(1).setResizable(false);
             workRequestJTable.getColumnModel().getColumn(2).setResizable(false);
             workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
+            workRequestJTable.getColumnModel().getColumn(4).setResizable(false);
         }
 
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 110, 460, 96));
@@ -125,19 +148,43 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
         int selectedRow = workRequestJTable.getSelectedRow();
         
         if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null,"Please select a row");
             return;
         }
         
-        WorkRequest request = (WorkRequest)workRequestJTable.getValueAt(selectedRow, 0);
-        request.setReceiver(userAccount);
-        request.setStatus("Pending");
+        Order order = (Order) workRequestJTable.getValueAt(selectedRow,0);
+        order.setOrderStatus("Order Picked up");
+        populateTable(); 
+//        WorkRequest request = (WorkRequest)workRequestJTable.getValueAt(selectedRow, 0);
+//        request.setReceiver(userAccount);
+//        request.setStatus("Pending");
         populateTable();
         
     }//GEN-LAST:event_assignJButtonActionPerformed
 
     private void processJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_processJButtonActionPerformed
+     int selectedRow = workRequestJTable.getSelectedRow();
         
-
+        if (selectedRow < 0){
+            JOptionPane.showMessageDialog(null,"Please select a row");
+            return;
+        }
+        
+        
+        Order order = (Order) workRequestJTable.getValueAt(selectedRow, 0);
+        if(order.getOrderStatus().equals("Delivered")) {
+            JOptionPane.showMessageDialog(null, "Order already delivered.");
+            return;
+        }
+        else if(order.getOrderStatus().equals("Order Picked up")){
+            order.setOrderStatus("Delivered");
+            JOptionPane.showMessageDialog(null, "Delivered Order with id : " + order.getOrderId());
+            populateTable();
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Please assign the order first");
+        }
+        
         
     }//GEN-LAST:event_processJButtonActionPerformed
 

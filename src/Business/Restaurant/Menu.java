@@ -26,4 +26,13 @@ public class Menu {
         this.itemList = itemList;
     }
     
+    public void addItem(String itemName, String itemType, double price, String restName){
+        Item addItem = new Item(itemName,itemType, price, restName);
+        itemList.add(addItem);
+    }
+    
+     public void deleteItem(Item item) {
+        itemList.remove(item);
+    }
+    
 }

@@ -9,7 +9,10 @@ import Business.Customer.Customer;
 import Business.EcoSystem;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -30,7 +33,7 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
         this.account = account;
         this.ecosystem = ecosystem;
         //populateComboBox();
-        //populateTable();
+        populateTable();
         
     }
 
@@ -45,7 +48,7 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
 
         lblTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblCustomer = new javax.swing.JTable();
         lblCName = new javax.swing.JLabel();
         txtCName = new javax.swing.JTextField();
         lblCUserName = new javax.swing.JLabel();
@@ -73,7 +76,7 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
         lblTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lblTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCustomer.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
                 {null, null, null, null, null, null},
@@ -84,7 +87,7 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
                 "Customer ID", "Name", "User Name", "Password", "Mobile Number", "Address"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblCustomer);
 
         lblCName.setText("Customer Name:");
 
@@ -238,18 +241,95 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
 
     private void btnAddCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustActionPerformed
         // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnAddCustActionPerformed
 
     private void btnModifyCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyCustActionPerformed
         // TODO add your handling code here:
+        int selectedRowIndex = tblCustomer.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(this, "Please select a row to view.");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) tblCustomer.getModel();
+        Customer selectedCustomer = (Customer)model.getValueAt(selectedRowIndex, 0);
+        String name = txtCName.getText();
+        String userName = txtCUserName.getText();
+        String password = txtCPwd.getText();
+
+        
+        ArrayList<Customer> cust = ecosystem.getCustomerDirectory().customerDetails();
+        for(Customer c: cust)
+        {
+            if(c.getName().equals(selectedCustomer.getName()))
+            {
+                c.setName(name);
+                c.returnUserAccount().setUsername(userName);
+                c.returnUserAccount().setPassword(password);
+                c.setUserName(userName);
+                c.setPassword(password);
+                c.setMobileNO(Long.parseLong(txtCMobile.getText()));
+                c.setAddress(txtCAddress.getText());
+                break;
+            }
+            
+        }
+        this.ecosystem.getCustomerDirectory().setCustomerDetails(cust);
+        JOptionPane.showMessageDialog(this, "Customer Record Updated Successfully.");
+        
+        txtCName.setText("");
+        txtCUserName.setText("");
+        txtCPwd.setText("");
+        txtCMobile.setText("");
+        txtCAddress.setText("");
+        populateTable();
     }//GEN-LAST:event_btnModifyCustActionPerformed
 
     private void btnDeleteCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCustActionPerformed
         // TODO add your handling code here:
+         int selectedRow = tblCustomer.getSelectedRow();
+        if(selectedRow < 0){
+            JOptionPane.showMessageDialog(this, "Please select a row to delete.");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) tblCustomer.getModel();
+        Customer selectedCustomer = (Customer)model.getValueAt(selectedRow, 0);
+        // First delete the customer from employee
+        this.ecosystem.getEmployeeDirectory().deleteEmployee(selectedCustomer.getName());
+        // And thne delete the userAccount
+        this.ecosystem.getUserAccountDirectory().deleteUserAccount(
+                this.ecosystem.getCustomerDirectory().customerDetails().
+                        get(selectedRow).returnUserAccount()
+        );
+        // finally delete the user from customer directory
+        this.ecosystem.getCustomerDirectory().deleteCustomer(selectedCustomer);
+        
+        JOptionPane.showMessageDialog(this, "Customer Record Deleted.");
+        for(Customer ck : this.ecosystem.getCustomerDirectory().customerDetails()){
+            System.out.println(ck.getName());
+        }
+        this.populateTable();
     }//GEN-LAST:event_btnDeleteCustActionPerformed
 
     private void btnViewCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewCustActionPerformed
         // TODO add your handling code here:
+         int selectedRowIndex = tblCustomer.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(this, "Please select a row to View");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) tblCustomer.getModel();
+        Customer selectedCustomer = (Customer)model.getValueAt(selectedRowIndex, 0);
+        txtCName.setText("");
+        txtCName.setText(selectedCustomer.getName());
+        txtCUserName.setText("");
+        txtCUserName.setText(selectedCustomer.getUserName());
+        txtCPwd.setText("");
+        txtCPwd.setText(selectedCustomer.getPassword());
+        txtCAddress.setText("");
+        txtCAddress.setText(selectedCustomer.getAddress());
+        txtCMobile.setText("");
+        txtCMobile.setText(String.valueOf(selectedCustomer.getMobileNO()));
     }//GEN-LAST:event_btnViewCustActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
@@ -260,6 +340,20 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
        layout.next(userProcessContainer);
     }//GEN-LAST:event_btnBackActionPerformed
 
+     private void populateTable(){
+        DefaultTableModel model = (DefaultTableModel) tblCustomer.getModel();
+        model.setRowCount(0);
+
+        for(Customer cust : this.ecosystem.getCustomerDirectory().customerDetails()){
+            Object[] row = new Object[5];
+            row[1] = cust;
+            row[2] = cust.getUserName();
+            row[3] = cust.getPassword();
+            row[4] = cust.getMobileNO();
+            row[5] = cust.getAddress();
+            model.addRow(row);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAddCust;
@@ -268,7 +362,6 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
     private javax.swing.JButton btnModifyCust;
     private javax.swing.JButton btnViewCust;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCAddress;
     private javax.swing.JLabel lblCID;
     private javax.swing.JLabel lblCMobile;
@@ -276,6 +369,7 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lblCPwd;
     private javax.swing.JLabel lblCUserName;
     private javax.swing.JLabel lblTitle;
+    private javax.swing.JTable tblCustomer;
     private javax.swing.JTextField txtCAddress;
     private javax.swing.JTextField txtCID;
     private javax.swing.JTextField txtCMobile;
@@ -284,3 +378,6 @@ public class ManageCustomersPanel extends javax.swing.JPanel {
     private javax.swing.JTextField txtCUserName;
     // End of variables declaration//GEN-END:variables
 }
+
+
+

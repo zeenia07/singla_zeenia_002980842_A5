@@ -159,14 +159,14 @@ public class DeliveryLoginPanel extends javax.swing.JPanel {
     private void loginJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginJButtonActionPerformed
         // Get user name
         System.out.println("sdfvb");
-//        DB4OUtil dB4OUtil = DB4OUtil.getInstance();
-//        EcoSystem system = dB4OUtil.retrieveSystem();
+        DB4OUtil dB4OUtil = DB4OUtil.getInstance();
+        EcoSystem system = dB4OUtil.retrieveSystem();
 //        UserAccount user1 = new UserAccountDirectory().createUserAccount("delivery01", "delivery01", new Employee(), null);
 //        UserAccountDirectory userAccountDirectory = new UserAccountDirectory();
 //        userAccountDirectory.getUserAccountList().add(user1);
 //        system.setUserAccountDirectory(userAccountDirectory);
 //        dB4OUtil.storeSystem(system);
-//        UserAccount user = new UserAccountDirectory().authenticateUser(userNameJTextField.getText(), new String(passwordField.getPassword()));
+        UserAccount user = new UserAccountDirectory().authenticateUser(userNameJTextField.getText(), new String(passwordField.getPassword()));
         String userName = userNameJTextField.getText();
         char[] passwordCharArray = passwordField.getPassword();
         String password = String.valueOf(passwordCharArray);

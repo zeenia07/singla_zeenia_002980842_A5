@@ -5,6 +5,9 @@
  */
 package Business.Restaurant;
 
+import Business.DB4OUtil.DB4OUtil;
+import Business.UserAccount.UserAccount;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,14 +16,55 @@ import java.util.List;
  */
 public class RestaurantDirectory {
     
-    private List<Restaurant> restaurantList;
+    private ArrayList<Restaurant> restaurantList;
 
-    public List<Restaurant> getRestaurantList() {
+     public RestaurantDirectory() {
+        restaurantList = DB4OUtil.getInstance().retrieveSystem().getRestaurantDirectory().getRestaurantList();
+    }
+     
+    public ArrayList<Restaurant> returnAllRestaurants() {
+        return restaurantList;
+    }
+    
+    public ArrayList<Restaurant> getRestaurantList() {
         return restaurantList;
     }
 
-    public void setRestaurantList(List<Restaurant> restaurantList) {
+    public void setRestaurantList(ArrayList<Restaurant> restaurantList) {
         this.restaurantList = restaurantList;
     }
+    
+    public Restaurant addRestaurant(String name, String address, String managerName, long phoneNumber) {
+        Restaurant restaurant = new Restaurant(name, address, managerName, phoneNumber);
+        restaurantList.add(restaurant);
+        return restaurant;
+    }
+    
+    public void deleteRestaurant(Restaurant restaurant){
+        restaurantList.remove(restaurant);
+    }
+    
+    public Restaurant getRestaurant(String name) {
+        for(Restaurant res : restaurantList) {
+            if(res.getName().equals(name)) {
+                return res;
+            }
+        }
+        return null;
+    }
+    
+     public Restaurant getRestaurant(UserAccount ua){
+        for(Restaurant r : restaurantList) {
+            if(r.returnUserAccount().getUsername().equals(ua.getUsername())) {
+                return r;
+            }
+        }
+        return null;
+    }
+    
+    public void addRestaurant(Restaurant res){
+        restaurantList.add(res);
+    }
+    
     
 }

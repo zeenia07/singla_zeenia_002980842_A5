@@ -8,6 +8,7 @@ import Business.DB4OUtil.DB4OUtil;
 import Business.Employee.Employee;
 import Business.Role.Role;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -30,9 +31,9 @@ public class UserAccountDirectory {
     }
 
     public UserAccount authenticateUser(String username, String password) {
-        for (UserAccount ua : userAccountList) {
-            if (ua.getUsername().equals(username) && ua.getPassword().equals(password)) {
-                return ua;
+        for (UserAccount user : userAccountList) {
+            if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
+                return user;
             }
         }
         return null;
@@ -55,5 +56,24 @@ public class UserAccountDirectory {
             }
         }
         return true;
+ 
+   }
+    
+     public UserAccount getUserAccount(String username){
+        for (UserAccount user : userAccountList){
+            if (user.getUsername().equals(username))
+                return user;
+        }
+        return null;
+    }
+    
+    public void deleteUserAccount(UserAccount inputUser){
+        Iterator<UserAccount> i = userAccountList.iterator();
+        while (i.hasNext()) {
+            UserAccount user = i.next();
+            if (user.getUsername().equals(inputUser.getUsername())) {
+                i.remove();
+            }
+        }
     }
 }

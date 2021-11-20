@@ -8,6 +8,8 @@ package Business;
 
 import Business.Customer.CustomerDirectory;
 import Business.DeliveryMan.DeliveryManDirectory;
+import Business.Restaurant.Order;
+import Business.Restaurant.OrderDirectory;
 import Business.Restaurant.RestaurantDirectory;
 import Business.Role.Role;
 import Business.Role.SystemAdminRole;
@@ -23,7 +25,8 @@ public class EcoSystem extends Organization{
     private RestaurantDirectory restaurantDirectory;
     private CustomerDirectory customerDirectory;
     private DeliveryManDirectory deliveryManDirectory;
-
+    private OrderDirectory orderDirectory;
+    
     public RestaurantDirectory getRestaurantDirectory() {
         return restaurantDirectory;
     }
@@ -48,13 +51,25 @@ public class EcoSystem extends Organization{
         this.deliveryManDirectory = deliveryManDirectory;
     }
     
+    public OrderDirectory getOrderDirectory(){
+        return this.orderDirectory;
+    }
     
+    public EcoSystem(){
+        super("Restaurant Delivery");
+        this.customerDirectory = new CustomerDirectory();
+        this.restaurantDirectory = new RestaurantDirectory();
+        this.deliveryManDirectory = new DeliveryManDirectory();
+        this.orderDirectory = new OrderDirectory();
+    }
 
-    public EcoSystem(RestaurantDirectory restaurantDirectory, CustomerDirectory customerDirectory, DeliveryManDirectory deliveryManDirectory) {
+    public EcoSystem(RestaurantDirectory restaurantDirectory, CustomerDirectory customerDirectory, DeliveryManDirectory deliveryManDirectory,
+            OrderDirectory orderDirectory) {
 
         this.restaurantDirectory = restaurantDirectory;
         this.customerDirectory = customerDirectory;
         this.deliveryManDirectory = deliveryManDirectory;
+        this.orderDirectory=orderDirectory;
     }
     
     public static EcoSystem getInstance(){
@@ -70,10 +85,11 @@ public class EcoSystem extends Organization{
         roleList.add(new SystemAdminRole());
         return roleList;
     }
-    private EcoSystem(){
-        super(null);
-       // networkList=new ArrayList<Network>();
-    }
+//    private EcoSystem(){
+//        super(null);
+//       // networkList=new ArrayList<Network>();
+//    }
+    
 
     
     public boolean checkIfUserIsUnique(String userName){
@@ -83,5 +99,15 @@ public class EcoSystem extends Organization{
        }
        return true;
        //return false;
+    }
+    
+    public int getLastOrderId(){
+        int maxOrderId = 0;
+        for(Order o : this.orderDirectory.getOrderList()){
+            if(o.getOrderId() > maxOrderId){
+               maxOrderId = o.getOrderId();
+            }
+        }
+        return maxOrderId;
     }
 }

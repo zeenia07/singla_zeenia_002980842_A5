@@ -3,7 +3,10 @@
 package userinterface.RestaurantAdminRole;
 
 
+import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
+import Business.Restaurant.Restaurant;
+import Business.Restaurant.RestaurantDirectory;
 import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
@@ -21,13 +24,18 @@ public class AdminWorkAreaJPanel extends javax.swing.JPanel {
     JPanel userProcessContainer;
     EcoSystem ecosystem;
     UserAccount account;
+    Restaurant restaurant;
+    RestaurantDirectory restaurantDirectory;
     public AdminWorkAreaJPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
         this.account = account;
         this.ecosystem=ecosystem;
         //populateTree();
-        //valueLabel.setText();
+        restaurantDirectory = DB4OUtil.getInstance().retrieveSystem().getRestaurantDirectory();
+//        this.restaurant = restaurantDirectory.getRestaurant(account);
+      //  valueLabel.setText(this.restaurant.getName());
+        
     }
     
     /** This method is called from within the constructor to

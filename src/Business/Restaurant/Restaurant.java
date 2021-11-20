@@ -5,6 +5,8 @@
  */
 package Business.Restaurant;
 
+import Business.UserAccount.UserAccount;
+
 /**
  *
  * @author harold
@@ -14,8 +16,27 @@ public class Restaurant {
     private int restId;
     private String name;
     private String address;
-    private String phone;
+    private long phone;
     private Menu menu;
+    private String managerName;
+     private UserAccount restManager;
+     
+     public Restaurant(String restaurantName, String address,
+                String managerName, long phoneNumber, UserAccount user) {
+        this.name = restaurantName;
+        this.address = address;
+        this.managerName = managerName;
+        this.phone = phoneNumber;
+        this.restManager = user;
+    }
+
+     public Restaurant(String name, String address, String managerName, long phoneNumber) {
+        //To change body of generated methods, choose Tools | Templates.
+        this.name = name;
+        this.address = address;
+        this.managerName = managerName;
+        this.phone = phoneNumber;
+    }
 
     public int getRestId() {
         return restId;
@@ -41,11 +62,11 @@ public class Restaurant {
         this.address = address;
     }
 
-    public String getPhone() {
+    public long getPhone() {
         return phone;
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(long phone) {
         this.phone = phone;
     }
 
@@ -56,7 +77,22 @@ public class Restaurant {
     public void setMenu(Menu menu) {
         this.menu = menu;
     }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
+    }
     
+     public UserAccount returnUserAccount(){
+        return this.restManager;
+    }
     
+     @Override
+    public String toString() {
+        return name;
+    }
     
 }
