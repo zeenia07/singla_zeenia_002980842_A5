@@ -19,7 +19,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 /**
  *
- * @author Dell
+ * @author MyPC1
  */
 public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
 
@@ -44,7 +44,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         root.insert(networks, 0);
 
         ArrayList<Customer> customerDir= this.ecosystem.getCustomerDirectory().returnCustomerDetails();
-        ArrayList<DeliveryMan> deliveryDir = ecosystem.getDeliveryManDirectory().deliveryAgentDetails();
+        ArrayList<DeliveryMan> deliveryDir = ecosystem.getDeliveryManDirectory().returnDeliveryAgentDetails();
         ArrayList<Restaurant> restaurantDir = ecosystem.getRestaurantDirectory().returnAllRestaurants();
 
         Customer customer;
@@ -122,7 +122,7 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 598, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 395, Short.MAX_VALUE)
         );
 
         jSplitPane.setLeftComponent(jPanel1);
@@ -166,18 +166,20 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(btnManageEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnManageNetwork, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnNewUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnManageAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(37, 37, 37)
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(lblSelectedNode)))
-                .addContainerGap(318, Short.MAX_VALUE))
+                        .addComponent(lblSelectedNode))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(91, 91, 91)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btnManageEnterprise, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnManageNetwork, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnNewUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnManageAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(297, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,15 +188,15 @@ public class SystemAdminWorkAreaJPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblSelectedNode))
-                .addGap(49, 49, 49)
-                .addComponent(btnNewUser)
-                .addGap(16, 16, 16)
+                .addGap(54, 54, 54)
                 .addComponent(btnManageNetwork)
                 .addGap(18, 18, 18)
                 .addComponent(btnManageEnterprise)
                 .addGap(18, 18, 18)
                 .addComponent(btnManageAdmin)
-                .addContainerGap(336, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnNewUser)
+                .addContainerGap(156, Short.MAX_VALUE))
         );
 
         jSplitPane.setRightComponent(jPanel2);

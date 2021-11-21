@@ -23,18 +23,19 @@ public class ManageRestInfoPanel extends javax.swing.JPanel {
      * Creates new form ManageRestInfoPanel
      */
     JPanel userProcessContainer;
-    EcoSystem ecosystem;
-    Restaurant restaurant;
+    EcoSystem system;
+    Restaurant res;
     
-    public ManageRestInfoPanel(JPanel userProcessContainer, EcoSystem ecosystem, Restaurant restaurant) {
+    public ManageRestInfoPanel(JPanel userProcessContainer, EcoSystem system, Restaurant res) {
         initComponents();
         this.userProcessContainer = userProcessContainer;
-        this.ecosystem = ecosystem;
-        this.restaurant = restaurant;
-        txtRestaurantName.setText(this.restaurant.getRestaurantName());
-        txtMangerName.setText(this.restaurant.getManagerName());
-        txtAddress.setText(this.restaurant.getAddress());
-        txtPhoneNumber.setText(String.valueOf(this.restaurant.getPhoneNumber()));
+        this.system = system;
+        this.res = res;
+        txtAddress.setText(this.res.getAddress());
+        txtMangerName.setText(this.res.getManagerName());
+        txtRestaurantName.setText(this.res.getRestaurantName());
+        System.out.println(this.res.getPhoneNumber());
+        txtPhoneNumber.setText(String.valueOf(this.res.getPhoneNumber()));
     }
 
     /**
@@ -68,7 +69,7 @@ public class ManageRestInfoPanel extends javax.swing.JPanel {
 
         jLabel5.setText("Restaurant Manager Name :");
 
-        btnUpdate.setText("Create");
+        btnUpdate.setText("Update");
         btnUpdate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnUpdateActionPerformed(evt);
@@ -93,51 +94,43 @@ public class ManageRestInfoPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 607, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnSubmit))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(99, 99, 99)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtMangerName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel4))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtRestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(32, 32, 32)
-                                        .addComponent(btnUpdate)))))
-                        .addGap(0, 128, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(txtRestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMangerName, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnSubmit)
+                        .addGap(28, 28, 28))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnUpdate)
+                        .addGap(189, 189, 189))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap()
                 .addComponent(btnSubmit)
-                .addGap(12, 12, 12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTitle)
-                .addGap(47, 47, 47)
+                .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtRestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtMangerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -145,9 +138,13 @@ public class ManageRestInfoPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtMangerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
                 .addComponent(btnUpdate)
-                .addContainerGap(81, Short.MAX_VALUE))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -169,20 +166,18 @@ public class ManageRestInfoPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int counter = 0;
            
-        for(Restaurant restaurantData : this.ecosystem.getRestaurantDirectory().returnAllRestaurants()){
+        for(Restaurant restaurantData : this.system.getRestaurantDirectory().returnAllRestaurants()){
             counter++;
-            if(restaurantData.getRestaurantName().equals(this.restaurant.getRestaurantName())){
+            if(restaurantData.getRestaurantName().equals(this.res.getRestaurantName())){
                 break;
             }
         }
-        this.restaurant.setRestaurantName(txtRestaurantName.getText());
-        this.restaurant.setManagerName(txtMangerName.getText());
-        this.restaurant.setAddress(txtAddress.getText());
-        this.restaurant.setPhoneNumber(Long.parseLong(txtPhoneNumber.getText()));
-        
-        
+        this.res.setAddress(txtAddress.getText());
+        this.res.setPhoneNumber(Long.parseLong(txtPhoneNumber.getText()));
+        this.res.setManagerName(txtMangerName.getText());
+        this.res.setRestaurantName(txtRestaurantName.getText());
         JOptionPane.showMessageDialog(this, "Updated info Successfully");
-//        this.ecosystem.getRestaurantDirectory().setRestaurant(counter-1, this.restaurant);
+//        this.system.getRestaurantDirectory().setRestaurant(counter-1, this.res);
     }//GEN-LAST:event_btnUpdateActionPerformed
 
 

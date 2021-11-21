@@ -17,7 +17,6 @@ public class DeliveryMan {
     private String status;
     private String address;
     private long phoneNumber;
-    UserAccount userAccount;
 
     public String getAddress() {
         return this.address;
@@ -34,19 +33,19 @@ public class DeliveryMan {
     public void setPhoneNumber(long phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-   
+    UserAccount ua;
 
-    public UserAccount getUserAccount() {
-        return userAccount;
+    public UserAccount getUa() {
+        return ua;
     }
 
     public void setUa(UserAccount ua) {
-        this.userAccount = userAccount;
+        this.ua = ua;
     }
     
     public DeliveryMan(UserAccount ua)
     {
-        this.userAccount= userAccount;
+        this.ua = ua;
         this.name = ua.getUsername();
     }
 

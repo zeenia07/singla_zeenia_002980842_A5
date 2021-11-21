@@ -18,7 +18,7 @@ public class Customer {
     private String userPassword;
     private long phoneNumber;
     private String address;
-    UserAccount userAccount;
+    UserAccount ua;
 
     public long getPhoneNumber() {
         return phoneNumber;
@@ -37,22 +37,22 @@ public class Customer {
     }
 
     public UserAccount getUa() {
-        return userAccount;
+        return ua;
     }
 
-    public void setUa(UserAccount userAccount) {
-        this.userAccount = userAccount;
+    public void setUa(UserAccount ua) {
+        this.ua = ua;
     }
     
-    public Customer(UserAccount userAccount){
-       this.userAccount = userAccount; 
-       this.name = userAccount.getEmployee().getName();
-       this.userName = userAccount.getUsername();
-       this.userPassword = userAccount.getPassword();
+    public Customer(UserAccount ua){
+       this.ua = ua; 
+       this.name = ua.getEmployee().getName();
+       this.userName = ua.getUsername();
+       this.userPassword = ua.getPassword();
     }
     
     public UserAccount returnUserAccount(){
-        return this.userAccount;
+        return this.ua;
     }
     
     public String getName() {

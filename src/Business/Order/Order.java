@@ -15,17 +15,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
- * @author Dell
+ * @author ravi
  */
 public class Order extends WorkRequest {
    
-    private static AtomicInteger atomicInteger = new AtomicInteger(101);
+    private static AtomicInteger atomicInteger = new AtomicInteger(100002);
     private int orderId;
     private String orderStatus;
     private Restaurant restaurant;
     private Customer customer;
     private String deliveryMan;
-    //private int quantity;
+    private int quantity;
     private Item item;
     private String result;
     private boolean assign;
@@ -83,13 +83,13 @@ public class Order extends WorkRequest {
         this.deliveryMan = deliveryMan;
     }
 
-//    public int getQuantity() {
-//        return quantity;
-//    }
-//
-//    public void setQuantity(int quantity) {
-//        this.quantity = quantity;
-//    }
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
     public Item getItem() {
         return item;

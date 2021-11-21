@@ -13,26 +13,26 @@ import java.util.ArrayList;
  */
 public class CustomerDirectory {
     
-    ArrayList<Customer> cust;
+    ArrayList<Customer> cd;
     
     public CustomerDirectory(){
-       cust = new ArrayList<Customer>();
+        cd = new ArrayList<Customer>();
     }
     
     public void addCustomer(Customer c){
-        cust.add(c);
+        cd.add(c);
     }
     
     public void deleteCustomer(Customer c){
-        cust.remove(c);
+        cd.remove(c);
     }
     
     public ArrayList<Customer> returnCustomerDetails(){
-        return cust;
+        return cd;
     }
     
     public Customer getCustomer(String name){
-        for(Customer customer: cust){
+        for(Customer customer: cd){
             if(customer.getName().equalsIgnoreCase(name)){
                 return customer;
             }
@@ -41,7 +41,7 @@ public class CustomerDirectory {
     }
     
     public void setCustomerDetails(ArrayList<Customer> cusList){
-        cust= cusList;
+        cd = cusList;
     }
     
 }

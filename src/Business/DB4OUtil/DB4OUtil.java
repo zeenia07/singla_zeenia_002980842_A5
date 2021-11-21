@@ -66,12 +66,15 @@ public class DB4OUtil {
         EcoSystem system;
         if (systems.size() == 0){
             system = ConfigureASystem.configure();  // If there's no System in the record, create a new one
-            
+            System.out.println(system.getEmployeeDirectory().getEmployeeList());
+            System.out.println(system.getCustomerDirectory().returnCustomerDetails());
 //            System.exit(0);
         }
         else{
             system = systems.get(systems.size() - 1);
-            
+            System.out.println("Inside else in DB4Outils");
+            System.out.println(system.getEmployeeDirectory().getEmployeeList());
+            System.out.println(system.getCustomerDirectory().returnCustomerDetails());
 //            System.exit(0);
         }
         conn.close();

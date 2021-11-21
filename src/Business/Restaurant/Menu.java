@@ -28,8 +28,8 @@ public class Menu {
         this.itemList = itemList;
     }
     
-    public void addItem(String itemName, String itemType, double price, String res) {
-        Item newItem = new Item(itemName, itemType, price, res);
+    public void addNewItem(String itemName, double price, String res) {
+        Item newItem = new Item(itemName, price, res);
         itemList.add(newItem);
     }
     

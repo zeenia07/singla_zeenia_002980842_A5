@@ -27,7 +27,7 @@ public class DeliveryManDirectory {
         dm.remove(c);
     }
     
-    public ArrayList<DeliveryMan> deliveryAgentDetails(){
+    public ArrayList<DeliveryMan> returnDeliveryAgentDetails(){
         return dm;
     }
     

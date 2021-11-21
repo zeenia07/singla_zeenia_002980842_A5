@@ -39,7 +39,7 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
     }
     
     public void populateTable(){
-        
+        System.out.println("Inside method to populate orders table");
         DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
         model.setRowCount(0);
         
@@ -116,23 +116,23 @@ public class DeliveryManWorkAreaJPanel extends javax.swing.JPanel {
             workRequestJTable.getColumnModel().getColumn(3).setResizable(false);
         }
 
-        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(65, 120, 520, 96));
+        add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, 375, 96));
 
-        assignJButton.setText("Assign");
+        assignJButton.setText("Assign ");
         assignJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 assignJButtonActionPerformed(evt);
             }
         });
-        add(assignJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
+        add(assignJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, -1, -1));
 
-        processJButton.setText("Process");
+        processJButton.setText("Process Order");
         processJButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 processJButtonActionPerformed(evt);
             }
         });
-        add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 260, 100, -1));
+        add(processJButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, -1, -1));
 
         refreshJButton.setText("Refresh");
         refreshJButton.addActionListener(new java.awt.event.ActionListener() {

@@ -27,8 +27,8 @@ public class RestaurantDirectory {
         this.restaurantDirectory = restaurantDirectory;
     }
     
-    public Restaurant newRestaurant(String name, String address, String managerName, int phoneNumber) {
-        Restaurant restaurant = new Restaurant(name, address, managerName, phoneNumber);
+    public Restaurant newRestaurant(String name, String address, String mName, int phoneNumber) {
+        Restaurant restaurant = new Restaurant(name, address, mName, phoneNumber);
         restaurantDirectory.add(restaurant);
         System.out.println(restaurantDirectory.size() + "New Res");
         return restaurant;

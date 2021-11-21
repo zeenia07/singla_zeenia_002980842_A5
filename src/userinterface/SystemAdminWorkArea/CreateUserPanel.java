@@ -37,12 +37,12 @@ public class CreateUserPanel extends javax.swing.JPanel {
      * Creates new form CreateUserPanel
      */
     JPanel userProcessContainer;
-    EcoSystem ecosystem;
+    EcoSystem system;
     Validation validation;
     
-    public CreateUserPanel(JPanel userProcessContainer, EcoSystem ecosystem) {
+    public CreateUserPanel(JPanel userProcessContainer, EcoSystem system) {
         initComponents();
-        this.ecosystem = ecosystem;
+        this.system = system;
         this.userProcessContainer = userProcessContainer;
         this.validation = new Validation();
     }
@@ -57,6 +57,7 @@ public class CreateUserPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jPasswordField1 = new javax.swing.JPasswordField();
+        btnGoBack = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -75,11 +76,17 @@ public class CreateUserPanel extends javax.swing.JPanel {
         txtAddress = new javax.swing.JTextField();
         txtPhoneNumber = new javax.swing.JTextField();
         lblTitle = new javax.swing.JLabel();
-        btnGoBack1 = new javax.swing.JButton();
 
         jPasswordField1.setText("jPasswordField1");
 
         setBackground(new java.awt.Color(204, 0, 51));
+
+        btnGoBack.setText("Back");
+        btnGoBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGoBackActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Name :");
 
@@ -93,7 +100,7 @@ public class CreateUserPanel extends javax.swing.JPanel {
 
         jLabel7.setText("Restaurant Name :");
 
-        btnSubmit.setText("Create");
+        btnSubmit.setText("Submit");
         btnSubmit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSubmitActionPerformed(evt);
@@ -111,12 +118,6 @@ public class CreateUserPanel extends javax.swing.JPanel {
 
         jLabel9.setText("Phone Number :");
 
-        txtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPhoneNumberActionPerformed(evt);
-            }
-        });
-
         lblTitle.setBackground(new java.awt.Color(102, 255, 255));
         lblTitle.setFont(new java.awt.Font("Sitka Small", 1, 24)); // NOI18N
         lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -124,59 +125,60 @@ public class CreateUserPanel extends javax.swing.JPanel {
         lblTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lblTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        btnGoBack1.setText("Back");
-        btnGoBack1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGoBack1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(144, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jLabel4)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel9))
+                                .addGap(10, 10, 10)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel3))
-                                .addComponent(jLabel5))
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(23, 23, 23)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtAddress)
-                            .addComponent(txtPasswordConfirmation)
-                            .addComponent(txtRestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtUsername, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                            .addComponent(txtName, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtPhoneNumber)
-                            .addComponent(comboRole, 0, 163, Short.MAX_VALUE))
-                        .addGap(144, 144, 144))
+                                    .addComponent(txtRestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(comboRole, 0, 182, Short.MAX_VALUE)
+                                        .addComponent(txtPassword)
+                                        .addComponent(txtPasswordConfirmation)
+                                        .addComponent(txtAddress)
+                                        .addComponent(txtPhoneNumber))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel2))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txtName)
+                                    .addComponent(txtUsername))))
+                        .addGap(124, 124, 124))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnGoBack1)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(197, 197, 197))))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnGoBack)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnSubmit, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(159, 159, 159))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnGoBack1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
+                .addComponent(btnGoBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTitle)
-                .addGap(45, 45, 45)
+                .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -185,17 +187,17 @@ public class CreateUserPanel extends javax.swing.JPanel {
                     .addComponent(jLabel3)
                     .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(txtPasswordConfirmation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
@@ -204,19 +206,33 @@ public class CreateUserPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(comboRole, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addGap(21, 21, 21)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(txtRestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtRestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(26, 26, 26)
                 .addComponent(btnSubmit)
-                .addContainerGap())
+                .addContainerGap(35, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGoBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBackActionPerformed
+        // TODO add your handling code here:
+        this.userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+        Component[] comps = this.userProcessContainer.getComponents();
+        for(Component comp : comps){
+            if(comp instanceof SystemAdminWorkAreaJPanel){
+                SystemAdminWorkAreaJPanel systemAdminWorkAreaJPanel= (SystemAdminWorkAreaJPanel) comp;
+                systemAdminWorkAreaJPanel.populateTree();
+            }
+        }
+    }//GEN-LAST:event_btnGoBackActionPerformed
+
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-        UserAccountDirectory usersList = this.ecosystem.getUserAccountDirectory();
+        UserAccountDirectory usersList = this.system.getUserAccountDirectory();
         String role = (String) comboRole.getSelectedItem();
         Employee employee = new Employee();
         employee.setName(txtName.getText());
@@ -241,8 +257,8 @@ public class CreateUserPanel extends javax.swing.JPanel {
                     customer.setAddress(txtAddress.getText());
                     customer.setPhoneNumber(Long.parseLong(txtPhoneNumber.getText()));
                     System.out.println(customer.getName());
-                    System.out.println(ecosystem.getCustomerDirectory());
-                    ecosystem.getCustomerDirectory().addCustomer(customer);
+                    System.out.println(system.getCustomerDirectory());
+                    system.getCustomerDirectory().addCustomer(customer);
                     JOptionPane.showMessageDialog(this, "Added the customer successfully");
                     this.clearText();
                 }
@@ -253,7 +269,7 @@ public class CreateUserPanel extends javax.swing.JPanel {
                     deliveryAgent.setAddress(txtAddress.getText());
                     deliveryAgent.setPhoneNumber(Long.parseLong(txtPhoneNumber.getText())); 
                     deliveryAgent.setStatus("Available");
-                    ecosystem.getDeliveryManDirectory().addDeliveryAgent(deliveryAgent);
+                    system.getDeliveryManDirectory().addDeliveryAgent(deliveryAgent);
                     JOptionPane.showMessageDialog(this, "Added the DeliveryMan successfully");
                     this.clearText();
                 }
@@ -266,7 +282,7 @@ public class CreateUserPanel extends javax.swing.JPanel {
                         Restaurant restaurantData = new Restaurant(txtRestaurantName.getText(),
                                 txtAddress.getText(), txtName.getText(),
                                 Long.parseLong(txtPhoneNumber.getText()), ua);
-                        ecosystem.getRestaurantDirectory().addRestaurant(restaurantData);
+                        system.getRestaurantDirectory().addRestaurant(restaurantData);
                         JOptionPane.showMessageDialog(this, "Added the Restaurant and Admin Successfully");
                         this.clearText();
                     }
@@ -302,27 +318,9 @@ public class CreateUserPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_comboRoleActionPerformed
 
-    private void btnGoBack1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGoBack1ActionPerformed
-        // TODO add your handling code here:
-        this.userProcessContainer.remove(this);
-        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-        layout.previous(userProcessContainer);
-        Component[] comps = this.userProcessContainer.getComponents();
-        for(Component comp : comps){
-            if(comp instanceof SystemAdminWorkAreaJPanel){
-                SystemAdminWorkAreaJPanel systemAdminWorkAreaJPanel= (SystemAdminWorkAreaJPanel) comp;
-                systemAdminWorkAreaJPanel.populateTree();
-            }
-        }
-    }//GEN-LAST:event_btnGoBack1ActionPerformed
-
-    private void txtPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneNumberActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPhoneNumberActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnGoBack1;
+    private javax.swing.JButton btnGoBack;
     private javax.swing.JButton btnSubmit;
     private javax.swing.JComboBox comboRole;
     private javax.swing.JLabel jLabel2;
@@ -349,7 +347,10 @@ public class CreateUserPanel extends javax.swing.JPanel {
                     txtRestaurantName, txtUsername, txtAddress, txtPhoneNumber};
         for(JTextField pk : textFields){
             pk.setText("");
-        }        
+        }
+//        txtPassword.setText("");
+//        txtPasswordConfirmation.setText("");
+        
     }
 
 }

@@ -60,13 +60,12 @@ public class UserAccountDirectory {
     }
     
     public void deleteUserAccount(UserAccount inputUserAcc){
-        Iterator<UserAccount> i = userAccountList.iterator();
-        while (i.hasNext()) {
-            UserAccount ua = i.next();
+        Iterator<UserAccount> itr = userAccountList.iterator();
+        while (itr.hasNext()) {
+            UserAccount ua = itr.next();
             if (ua.getUsername().equals(inputUserAcc.getUsername())) {
-                i.remove();
-           
+                itr.remove();
+            }
         }
     }
-}
 }

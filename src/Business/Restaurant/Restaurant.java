@@ -21,12 +21,12 @@ public class Restaurant {
     private UserAccount managerAccount;
     
     public Restaurant(String restaurantName, String address,
-                String managerName, long phoneNumber, UserAccount user) {
+                String managerName, long phoneNumber, UserAccount ua) {
         this.restaurantName = restaurantName;
         this.address = address;
         this.managerName = managerName;
         this.phoneNumber = phoneNumber;
-        this.managerAccount = user;
+        this.managerAccount = ua;
     }
     
     public Restaurant(String restaurantName, String address,

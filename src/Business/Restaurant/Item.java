@@ -12,27 +12,17 @@ package Business.Restaurant;
 public class Item {
     
     private String itemName;
-    private String itemType;
     private double price;
     private String restaurantName;
     
-    public Item(String itemName, String itemType, double price, String restaurantName) {
+    public Item(String itemName, double price, String restaurantName) {
         this.itemName = itemName;
-        this.itemType = itemType;
         this.price = price;
         this.restaurantName = restaurantName;
     }
 
     public String getItemName() {
         return itemName;
-    }
-
-    public String getItemType() {
-        return itemType;
-    }
-
-    public void setItemType(String itemType) {
-        this.itemType = itemType;
     }
 
     public void setItemName(String itemName) {

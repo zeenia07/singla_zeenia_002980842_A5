@@ -34,7 +34,7 @@ public class EcoSystem extends Organization{
     private OrderDirectory orderDirectory;
 
     public EcoSystem(RestaurantDirectory restaurantDirectory, CustomerDirectory customerDirectory, DeliveryManDirectory deliveryManDirectory) {
-        
+        System.out.println("Inside public constructuer");
         this.restaurantDirectory = restaurantDirectory;
         this.customerDirectory = customerDirectory;
         this.deliveryManDirectory = deliveryManDirectory;
@@ -43,7 +43,7 @@ public class EcoSystem extends Organization{
     public EcoSystem(RestaurantDirectory restaurantDirectory, 
             CustomerDirectory customerDirectory, 
             DeliveryManDirectory deliveryManDirectory, OrderDirectory orderDirectory) {
-       
+        System.out.println("Inside public constructuer");
         this.restaurantDirectory = restaurantDirectory;
         this.customerDirectory = customerDirectory;
         this.deliveryManDirectory = deliveryManDirectory;
@@ -66,6 +66,17 @@ public class EcoSystem extends Organization{
         return business;
     }
     
+    @Override
+    public ArrayList<Role> getSupportedRole() {
+        ArrayList<Role> roleList=new ArrayList<Role>();
+        roleList.add(new SystemAdminRole());
+        roleList.add(new CustomerRole());
+        roleList.add(new AdminRole());
+        roleList.add(new DeliverManRole());
+        return roleList;
+    }
+    
+
     
     public boolean checkIfUserIsUnique(String userName){
        UserAccountDirectory usersList = business.getUserAccountDirectory();
@@ -108,16 +119,6 @@ public class EcoSystem extends Organization{
             }
         }
         return maxOrderId;
-    }
-    
-    @Override
-    public ArrayList<Role> getSupportedRole() {
-        ArrayList<Role> roleList=new ArrayList<Role>();
-        roleList.add(new SystemAdminRole());
-        roleList.add(new CustomerRole());
-        roleList.add(new AdminRole());
-        roleList.add(new DeliverManRole());
-        return roleList;
     }
     
 }
