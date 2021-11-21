@@ -5,10 +5,10 @@
 package userinterface.CustomerRole;
 
 import Business.Customer.Customer;
-import Business.DB4OUtil.DB4OUtil;
 import Business.EcoSystem;
 import Business.Restaurant.Item;
-import Business.Restaurant.Order;
+import Business.Restaurant.Menu;
+import Business.Order.Order;
 import Business.Restaurant.Restaurant;
 
 import Business.UserAccount.UserAccount;
@@ -27,49 +27,69 @@ import javax.swing.table.DefaultTableModel;
 public class CustomerAreaJPanel extends javax.swing.JPanel {
 
     private JPanel userProcessContainer;
-
+    private EcoSystem system;
     private UserAccount userAccount;
-    private EcoSystem ecosystem;
     /**
      * Creates new form DoctorWorkAreaJPanel
      */
-    public CustomerAreaJPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem) {
+    public CustomerAreaJPanel(JPanel userProcessContainer,
+                            UserAccount account ,EcoSystem system) {
         initComponents();
         
         this.userProcessContainer = userProcessContainer;
-        
+        this.system = system;
         this.userAccount = account;
-        this.ecosystem=ecosystem;
         valueLabel.setText(account.getUsername());
-        ArrayList<Restaurant> restList = DB4OUtil.getInstance().retrieveSystem().getRestaurantDirectory().returnAllRestaurants();
-        ArrayList<String> restaurantList = new ArrayList();
-        for(Restaurant res : restList){
-            restaurantList.add(res.getName());
+        ArrayList<Restaurant> restList = this.system.getRestaurantDirectory().returnAllRestaurants();
+        ArrayList<String> restaurantNames = new ArrayList();
+        for(Restaurant p : restList){
+            restaurantNames.add(p.getRestaurantName());
         }
-        comboRest.setModel(new DefaultComboBoxModel<String>(restaurantList.toArray(new String[0])));
+        comboRestaurant.setModel(new DefaultComboBoxModel<String>(restaurantNames.toArray(new String[0])));
         populateMenuTable();
         populateRequestTable();
     }
+    
+    public void populateMenuTable(){
+        String restaurantName = comboRestaurant.getSelectedItem().toString();
+        ArrayList<Restaurant> restList = this.system.getRestaurantDirectory().returnAllRestaurants();
+        ArrayList<Item> itemList = new ArrayList();
+        for(Restaurant p : restList){
+            if(p.getRestaurantName().equals(restaurantName)){
+                itemList = p.getMenu().getMenu();
+                break;
+            }
+        }
+        
+       
+        DefaultTableModel model = (DefaultTableModel) tblMenu.getModel();
+        model.setRowCount(0);
 
-//    CustomerAreaJPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem) {
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-//    }
+        for(Item item : itemList){
+            System.out.println(item);
+            Object[] row = new Object[3];
+            row[0] = item;
+            row[1] = item.getItemType();
+            row[2] = item.getPrice();
+            model.addRow(row);
+        }
+    }
     
     public void populateRequestTable(){
-        DefaultTableModel model = (DefaultTableModel) tblOrderSummary.getModel();
+        DefaultTableModel model = (DefaultTableModel) workRequestJTable.getModel();
         model.setRowCount(0);
-        for (Order order : ecosystem.getOrderDirectory().getOrderList()){
+        for (Order order : system.getOrderDirectory().getOrderDirectory()){
+           
             if(userAccount.getEmployee().getName().equals(order.getCustomer().getName())) {
                 Object[] row = new Object[8];
                 row[0] = order;
-                row[1] = order.getRestaurant().getName();
-                row[2] = order.getItem().getItemName();
-                row[3] = order.getItem().getItemType();
-                row[4] = order.getQuantity();
-                row[5] = order.getQuantity() * order.getItem().getPrice();
-                row[6] = order.getMessage();
-                row[7] = order.getCustomer().getName();
-                row[8] = order.getOrderStatus();
+                row[1] = order.getItem().getItemName();
+                row[2] = order.getItem().getItemType();
+                row[3] = order.getItem().getPrice();
+                row[4] = order.getRestaurant().getRestaurantName();
+                row[5] = order.getMessage();
+                row[6] = order.getCustomer().getName();
+                row[7] = order.getOrderStatus();
                 
                 model.addRow(row);
             }
@@ -86,26 +106,41 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblMenu = new javax.swing.JTable();
-        btnPlaceOrder = new javax.swing.JButton();
+        btnSubmitReview = new javax.swing.JButton();
         refreshTestJButton = new javax.swing.JButton();
         enterpriseLabel = new javax.swing.JLabel();
-        comboRest = new javax.swing.JComboBox<>();
-        lblTitle = new javax.swing.JLabel();
-        btnOrderSummary = new javax.swing.JButton();
-        lblItemName = new javax.swing.JLabel();
-        txtComment = new javax.swing.JTextField();
-        lblComment = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblOrderSummary = new javax.swing.JTable();
-        enterpriseLabel1 = new javax.swing.JLabel();
         valueLabel = new javax.swing.JLabel();
-        txtQuantity = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        btnComments = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblMenu = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        comboRestaurant = new javax.swing.JComboBox();
+        btnPlaceOrder = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        workRequestJTable = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        txtComment = new javax.swing.JTextField();
 
         setBackground(new java.awt.Color(204, 0, 51));
+
+        btnSubmitReview.setText("Submit Comments");
+        btnSubmitReview.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitReviewActionPerformed(evt);
+            }
+        });
+
+        refreshTestJButton.setText("Refresh Order History");
+        refreshTestJButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshTestJButtonActionPerformed(evt);
+            }
+        });
+
+        enterpriseLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        enterpriseLabel.setText("Welcome ");
+
+        valueLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        valueLabel.setText("<value>");
 
         tblMenu.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -115,85 +150,43 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                 {null, null, null}
             },
             new String [] {
-                "Menu Item", "Item Type", "Price"
+                "Item Name", "Item Type", "Price"
             }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.Object.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, true, true
-            };
+        ));
+        jScrollPane2.setViewportView(tblMenu);
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+        jLabel1.setText("Select Restaurant : ");
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
+        comboRestaurant.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboRestaurant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboRestaurantActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(tblMenu);
-        if (tblMenu.getColumnModel().getColumnCount() > 0) {
-            tblMenu.getColumnModel().getColumn(0).setResizable(false);
-        }
 
-        btnPlaceOrder.setText("Refresh");
+        btnPlaceOrder.setText("Place Order");
         btnPlaceOrder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlaceOrderActionPerformed(evt);
             }
         });
 
-        refreshTestJButton.setText("Refresh");
-        refreshTestJButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshTestJButtonActionPerformed(evt);
-            }
-        });
-
-        enterpriseLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        enterpriseLabel.setText("Select Restaurant: ");
-
-        comboRest.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Qdoba Mexican Grill", "Dominos", "Boston Shawarma", "Panera", "Starbucks" }));
-        comboRest.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboRestActionPerformed(evt);
-            }
-        });
-
-        lblTitle.setBackground(new java.awt.Color(102, 255, 255));
-        lblTitle.setFont(new java.awt.Font("Sitka Small", 1, 24)); // NOI18N
-        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("Place Orders");
-        lblTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-
-        btnOrderSummary.setText("Place Order");
-        btnOrderSummary.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOrderSummaryActionPerformed(evt);
-            }
-        });
-
-        lblComment.setText("Comments:");
-
-        tblOrderSummary.setModel(new javax.swing.table.DefaultTableModel(
+        workRequestJTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Order ID", "Restaurant", "Menu Item", "Item Type", "Quantity", "Price", "Message", "Receiver", "Status"
+                "Order ID", "ItemName", "Item Type", "Price", "Restaurant", "Message", "Receiver", "Status"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                true, true, false, true, true, true, true, true, true
+                false, false, true, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -204,227 +197,151 @@ public class CustomerAreaJPanel extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(tblOrderSummary);
-        if (tblOrderSummary.getColumnModel().getColumnCount() > 0) {
-            tblOrderSummary.getColumnModel().getColumn(2).setResizable(false);
-        }
+        jScrollPane3.setViewportView(workRequestJTable);
 
-        enterpriseLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        enterpriseLabel1.setText("Welcome ");
-
-        valueLabel.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        valueLabel.setText("<value>");
-
-        jLabel2.setText("Quantity");
-
-        btnComments.setText("Add Comments");
-        btnComments.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCommentsActionPerformed(evt);
-            }
-        });
+        jLabel3.setText("Add Comments To Order : ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(272, 272, 272)
-                .addComponent(enterpriseLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(comboRest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(enterpriseLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(17, 17, 17))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(comboRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(valueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 780, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(83, 83, 83)
+                        .addComponent(jLabel3)
                         .addGap(18, 18, 18)
-                        .addComponent(valueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(refreshTestJButton)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(lblItemName)
-                        .addGap(620, 620, 620))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(81, 81, 81)
-                        .addComponent(btnOrderSummary)
-                        .addGap(304, 304, 304))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblComment)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtComment, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(222, 222, 222))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 630, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 823, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnPlaceOrder)
-                        .addGap(313, 313, 313))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnComments)
-                        .addGap(277, 277, 277))))
+                        .addComponent(txtComment, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(72, 72, 72)
+                        .addComponent(btnSubmitReview))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(159, 159, 159)
+                        .addComponent(btnPlaceOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(137, 137, 137)
+                        .addComponent(refreshTestJButton)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnComments))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(refreshTestJButton)
-                            .addComponent(enterpriseLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(valueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblTitle)
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(comboRest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnOrderSummary)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2)
-                                .addComponent(txtQuantity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(44, 44, 44)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnPlaceOrder)
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblComment)
-                            .addComponent(txtComment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
-                        .addComponent(lblItemName)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(enterpriseLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(valueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(comboRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36)
+                .addComponent(btnPlaceOrder)
+                .addGap(49, 49, 49)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(refreshTestJButton)
+                .addGap(41, 41, 41)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(txtComment, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSubmitReview))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
-    populateRequestTable();         
-        
-        
-    }//GEN-LAST:event_btnPlaceOrderActionPerformed
-
-    private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
-
-        populateRequestTable();
-        
-    }//GEN-LAST:event_refreshTestJButtonActionPerformed
-
-    private void btnOrderSummaryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOrderSummaryActionPerformed
-        // TODO add your handling code here:
-        int selectedRow = tblMenu.getSelectedRow();
-        if(selectedRow < 0) {
-            JOptionPane.showMessageDialog(null,"Please select a row from table.", "Warning", JOptionPane.WARNING_MESSAGE);
+    private void btnSubmitReviewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitReviewActionPerformed
+  
+         if(txtComment.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null,"Please enter some value.");
             return;
         }
         
-        int quantity = Integer.parseInt(txtQuantity.getText());
-        String restaurantName = comboRest.getSelectedItem().toString();
-        Restaurant restaurant = ecosystem.getRestaurantDirectory().getRestaurant(restaurantName);
-        Customer customer = ecosystem.getCustomerDirectory().getCustomer(this.userAccount.getEmployee().getName());
+        int selectedRow = workRequestJTable.getSelectedRow();
+        if(selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,"Please Select a row from table.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        Order order = (Order)workRequestJTable.getValueAt(selectedRow, 0);
+        order.setMessage(txtComment.getText());
+        populateRequestTable();        
+    }//GEN-LAST:event_btnSubmitReviewActionPerformed
+
+    private void refreshTestJButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshTestJButtonActionPerformed
+
+        populateRequestTable();        
+    }//GEN-LAST:event_refreshTestJButtonActionPerformed
+
+    private void btnPlaceOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlaceOrderActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblMenu.getSelectedRow();
+        if(selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,"Please Select a row from table.", "Warning", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        //int quantity = Integer.parseInt(txtQuantity.getText());
+        String restaurantName = comboRestaurant.getSelectedItem().toString();
+        Restaurant restaurant = system.getRestaurantDirectory().getRestaurant(restaurantName);
+        Customer customer = system.getCustomerDirectory().getCustomer(this.userAccount.getEmployee().getName());
         Item selectedItem = (Item) tblMenu.getValueAt(selectedRow, 0);
         String status = "Order Placed";
         
-        int lastOrderId = ecosystem.getLastOrderId();
-        Order order = ecosystem.getOrderDirectory().addOrder();
+        int lastOrderId = system.getLastOrderId();
+        Order order = system.getOrderDirectory().newOrder();
         if(lastOrderId+1 > order.getOrderId()){
             order.setOrderId(lastOrderId++);
         }
         
         order.setCustomer(customer);
-        order.setQuantity(quantity);
+        //order.setQuantity(quantity);
         order.setItem(selectedItem);
         order.setRestaurant(restaurant);
         order.setOrderStatus(status);
         order.setAssign(false);
         order.setReceiver(this.userAccount);
         
-        JOptionPane.showMessageDialog(null,"Your order has been placed.");
+        JOptionPane.showMessageDialog(null,"Your order has been placed successfully.");
         populateRequestTable();
-    }//GEN-LAST:event_btnOrderSummaryActionPerformed
+    }//GEN-LAST:event_btnPlaceOrderActionPerformed
 
-    private void comboRestActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboRestActionPerformed
+    private void comboRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboRestaurantActionPerformed
         // TODO add your handling code here:
         this.populateMenuTable();
-    }//GEN-LAST:event_comboRestActionPerformed
+    }//GEN-LAST:event_comboRestaurantActionPerformed
 
-    private void btnCommentsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCommentsActionPerformed
-        // TODO add your handling code here:
-         if(txtComment.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null,"Please enter comments.");
-            return;
-        }
-        
-        int selectedRow = tblOrderSummary.getSelectedRow();
-        if(selectedRow < 0) {
-            JOptionPane.showMessageDialog(null,"Please Select a row.", "Warning", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        Order order = (Order)tblOrderSummary.getValueAt(selectedRow, 0);
-        order.setMessage(txtComment.getText());
-        populateRequestTable(); 
-    }//GEN-LAST:event_btnCommentsActionPerformed
-
-       public void populateMenuTable(){
-        String restaurantName = comboRest.getSelectedItem().toString();
-        ArrayList<Restaurant> restList = this.ecosystem.getRestaurantDirectory().returnAllRestaurants();
-        ArrayList<Item> itemList = new ArrayList();
-        for(Restaurant res : restList){
-            if(res.getName().equals(restaurantName)){
-                itemList = (ArrayList<Item>) res.getMenu().getItemList();
-                break;
-            }
-        }
-        
-        DefaultTableModel model = (DefaultTableModel) tblMenu.getModel();
-        model.setRowCount(0);
-
-        for(Item item : itemList){
-            Object[] row = new Object[3];
-            row[0] = item;
-            row[1] = item.getItemType();
-            row[2] = item.getPrice();
-            model.addRow(row);
-        }
-    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnComments;
-    private javax.swing.JButton btnOrderSummary;
     private javax.swing.JButton btnPlaceOrder;
-    private javax.swing.JComboBox<String> comboRest;
+    private javax.swing.JButton btnSubmitReview;
+    private javax.swing.JComboBox comboRestaurant;
     private javax.swing.JLabel enterpriseLabel;
-    private javax.swing.JLabel enterpriseLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel lblComment;
-    private javax.swing.JLabel lblItemName;
-    private javax.swing.JLabel lblTitle;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JButton refreshTestJButton;
     private javax.swing.JTable tblMenu;
-    private javax.swing.JTable tblOrderSummary;
     private javax.swing.JTextField txtComment;
-    private javax.swing.JTextField txtQuantity;
     private javax.swing.JLabel valueLabel;
+    private javax.swing.JTable workRequestJTable;
     // End of variables declaration//GEN-END:variables
 }

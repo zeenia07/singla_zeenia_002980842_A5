@@ -31,11 +31,11 @@ public class EmployeeDirectory {
     }
     
     public void deleteEmployee(String name){
-        Iterator<Employee> i = employeeList.iterator();
-        while (i.hasNext()) {
-          Employee ek = i.next();
+        Iterator<Employee> itr = employeeList.iterator();
+        while (itr.hasNext()) {
+          Employee ek = itr.next();
           if (ek.getName().equals(name)) {
-            i.remove();
+            itr.remove();
           }
         }
 

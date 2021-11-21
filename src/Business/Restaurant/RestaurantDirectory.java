@@ -5,65 +5,64 @@
  */
 package Business.Restaurant;
 
-import Business.DB4OUtil.DB4OUtil;
 import Business.UserAccount.UserAccount;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author harold
  */
 public class RestaurantDirectory {
+     private ArrayList<Restaurant> restaurantDirectory;
     
-    private ArrayList<Restaurant> restaurantList;
-
-     public RestaurantDirectory() {
-        restaurantList = DB4OUtil.getInstance().retrieveSystem().getRestaurantDirectory().getRestaurantList();
+    public RestaurantDirectory() {
+        restaurantDirectory = new ArrayList();
     }
-     
+
     public ArrayList<Restaurant> returnAllRestaurants() {
-        return restaurantList;
-    }
-    
-    public ArrayList<Restaurant> getRestaurantList() {
-        return restaurantList;
+        return restaurantDirectory;
     }
 
-    public void setRestaurantList(ArrayList<Restaurant> restaurantList) {
-        this.restaurantList = restaurantList;
+    public void setRestaurantDirectory(ArrayList<Restaurant> restaurantDirectory) {
+        this.restaurantDirectory = restaurantDirectory;
     }
     
-    public Restaurant addRestaurant(String name, String address, String managerName, long phoneNumber) {
+    public Restaurant newRestaurant(String name, String address, String managerName, int phoneNumber) {
         Restaurant restaurant = new Restaurant(name, address, managerName, phoneNumber);
-        restaurantList.add(restaurant);
+        restaurantDirectory.add(restaurant);
+        System.out.println(restaurantDirectory.size() + "New Res");
         return restaurant;
     }
     
-    public void deleteRestaurant(Restaurant restaurant){
-        restaurantList.remove(restaurant);
+    public void removeRestaurant(Restaurant restaurant){
+        restaurantDirectory.remove(restaurant);
     }
     
     public Restaurant getRestaurant(String name) {
-        for(Restaurant res : restaurantList) {
-            if(res.getName().equals(name)) {
-                return res;
-            }
-        }
-        return null;
-    }
-    
-     public Restaurant getRestaurant(UserAccount ua){
-        for(Restaurant r : restaurantList) {
-            if(r.returnUserAccount().getUsername().equals(ua.getUsername())) {
+        for(Restaurant r : restaurantDirectory) {
+            if(r.getRestaurantName().equals(name)) {
                 return r;
             }
         }
         return null;
     }
     
-    public void addRestaurant(Restaurant res){
-        restaurantList.add(res);
+    public void setRestaurant(int index, Restaurant res) {
+        this.restaurantDirectory.set(index, res);
+    }
+    
+    
+    public Restaurant getRestaurant(UserAccount ua){
+        for(Restaurant r : restaurantDirectory) {
+            if(r.returnUserAcc().getUsername().equals(ua.getUsername())) {
+                return r;
+            }
+        }
+        return null;
+    }
+    
+    public void addRestaurant(Restaurant rs){
+        restaurantDirectory.add(rs);
     }
     
     

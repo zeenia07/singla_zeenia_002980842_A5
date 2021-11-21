@@ -5,11 +5,15 @@
  */
 package userinterface.SystemAdminWorkArea;
 
+import Business.Customer.Customer;
 import Business.EcoSystem;
 import Business.Restaurant.Restaurant;
-import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import java.awt.Component;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,19 +22,16 @@ import javax.swing.JPanel;
 public class ManageRestaurantManagerPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form ManageRestaurantManagerPanel
+     * Creates new form UpdateCustomerDetails
      */
-    private JPanel userProcessContainer;
-    private UserAccount account;
-    private EcoSystem ecosystem;
-    private Restaurant restaurant;
-    public ManageRestaurantManagerPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem) {
+    JPanel userProcessContainer;
+    EcoSystem system;
+    
+    public ManageRestaurantManagerPanel(JPanel userProcessContainer, EcoSystem system) {
         initComponents();
-        this.userProcessContainer = userProcessContainer;        
-        this.account = account;
-        this.ecosystem = ecosystem;
-        //populateTable();
-        //populateComboBox();
+        this.system = system;
+        this.userProcessContainer = userProcessContainer;
+        this.populateTable();
     }
 
     /**
@@ -42,40 +43,92 @@ public class ManageRestaurantManagerPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnDeleteCust = new javax.swing.JButton();
-        btnViewCust = new javax.swing.JButton();
-        lblTitle = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblRestaurants = new javax.swing.JTable();
+        btnView = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        txtUsername = new javax.swing.JTextField();
+        btnSubmit = new javax.swing.JButton();
+        lbPassword = new javax.swing.JLabel();
+        lbName = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        lbUsername = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
-        lblCMobile = new javax.swing.JLabel();
-        lblCPwd = new javax.swing.JLabel();
-        lblCName = new javax.swing.JLabel();
-        btnModifyCust = new javax.swing.JButton();
-        txtCMobile = new javax.swing.JTextField();
-        txtCPwd = new javax.swing.JTextField();
-        txtCName = new javax.swing.JTextField();
-        lblCAddress = new javax.swing.JLabel();
-        lblCUserName = new javax.swing.JLabel();
-        txtCAddress = new javax.swing.JTextField();
-        txtCUserName = new javax.swing.JTextField();
-        lblCID = new javax.swing.JLabel();
-        txtCID = new javax.swing.JTextField();
-        btnAddCust = new javax.swing.JButton();
+        txtRestaurantName = new javax.swing.JTextField();
+        lbRestaurant = new javax.swing.JLabel();
+        txtPhoneNumber = new javax.swing.JTextField();
+        lbPassword1 = new javax.swing.JLabel();
+        txtAddress = new javax.swing.JTextField();
+        lblTitle = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 0, 51));
 
-        btnDeleteCust.setText("Delete");
-        btnDeleteCust.addActionListener(new java.awt.event.ActionListener() {
+        tblRestaurants.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Restaurant Name", "Manager Name", "Username", "PhoneNumber", "Address"
+            }
+        ));
+        jScrollPane1.setViewportView(tblRestaurants);
+
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteCustActionPerformed(evt);
+                btnViewActionPerformed(evt);
             }
         });
 
-        btnViewCust.setText("View");
-        btnViewCust.addActionListener(new java.awt.event.ActionListener() {
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewCustActionPerformed(evt);
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsernameActionPerformed(evt);
+            }
+        });
+
+        btnSubmit.setText("Modify");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
+
+        lbPassword.setText("Phone Number :");
+
+        lbName.setText("Manager Name :");
+
+        lbUsername.setText("Username :");
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
+        lbRestaurant.setText("Restaurant Name :");
+
+        txtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPhoneNumberActionPerformed(evt);
+            }
+        });
+
+        lbPassword1.setText("Address :");
+
+        txtAddress.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtAddressActionPerformed(evt);
             }
         });
 
@@ -86,203 +139,230 @@ public class ManageRestaurantManagerPanel extends javax.swing.JPanel {
         lblTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         lblTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Manager ID", "Name", "User Name", "Password", "Mobile Number", "Address"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
-
-        btnBack.setText("Back");
-        btnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBackActionPerformed(evt);
-            }
-        });
-
-        lblCMobile.setText("Mobile Number: ");
-
-        lblCPwd.setText("Password:");
-
-        lblCName.setText("Name:");
-
-        btnModifyCust.setText("Modify");
-        btnModifyCust.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModifyCustActionPerformed(evt);
-            }
-        });
-
-        lblCAddress.setText("Address: ");
-
-        lblCUserName.setText("User Name:");
-
-        lblCID.setText("Manager ID:");
-
-        btnAddCust.setText("Create");
-        btnAddCust.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddCustActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addContainerGap(725, Short.MAX_VALUE)
+                        .addComponent(btnBack))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(229, 229, 229)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbUsername)
+                            .addComponent(lbName)
+                            .addComponent(lbPassword)
+                            .addComponent(lbRestaurant)
+                            .addComponent(lbPassword1))
+                        .addGap(42, 42, 42)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtName)
+                                .addComponent(txtUsername)
+                                .addComponent(txtPhoneNumber)
+                                .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addGap(312, 312, 312)
-                                    .addComponent(btnAddCust)
-                                    .addGap(31, 31, 31)
-                                    .addComponent(btnModifyCust)
-                                    .addGap(28, 28, 28)
-                                    .addComponent(btnDeleteCust))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGap(236, 236, 236)
-                                    .addComponent(lblCAddress)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtCAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(186, 186, 186)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lblCUserName)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(txtCUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(lblCMobile)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(txtCMobile, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                            .addComponent(lblCPwd)
-                                            .addGap(18, 18, 18)
-                                            .addComponent(txtCPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lblCID)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtCID, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lblCName)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtCName, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btnViewCust, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE))))
+                                    .addGap(37, 37, 37)
+                                    .addComponent(btnSubmit)))
+                            .addComponent(txtRestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(btnDelete))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 722, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap()
                 .addComponent(btnBack)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnViewCust)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCID)
-                    .addComponent(txtCID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCName)
-                    .addComponent(txtCName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(btnDelete)
+                    .addComponent(btnView))
+                .addGap(28, 28, 28)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCUserName)
-                    .addComponent(txtCUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtRestaurantName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbRestaurant))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCPwd)
-                    .addComponent(txtCPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbName))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCMobile)
-                    .addComponent(txtCMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbUsername))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCAddress)
-                    .addComponent(txtCAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(lbPassword)
+                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddCust)
-                    .addComponent(btnModifyCust)
-                    .addComponent(btnDeleteCust))
-                .addGap(32, 32, 32))
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbPassword1))
+                .addGap(18, 18, 18)
+                .addComponent(btnSubmit)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnDeleteCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCustActionPerformed
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteCustActionPerformed
-
-    private void btnViewCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewCustActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewCustActionPerformed
+    }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-//       SystemAdminWorkAreaJPanel  systemAdminWorkAreaJPanel = new SystemAdminWorkAreaJPanel (userProcessContainer, account, ecosystem);
-//       userProcessContainer.add("systemAdminWorkAreaJPanel", systemAdminWorkAreaJPanel);
-//       CardLayout layout = (CardLayout)userProcessContainer.getLayout();
-       
-       SystemAdminWorkAreaJPanel  systemAdminWorkAreaJPanel = new SystemAdminWorkAreaJPanel(userProcessContainer, account, ecosystem);
-       userProcessContainer.add("systemAdminWorkAreaJPanel", systemAdminWorkAreaJPanel);
-       CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-       layout.next(userProcessContainer);
+        this.userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+        Component[] comps = this.userProcessContainer.getComponents();
+        for(Component comp : comps){
+            if(comp instanceof SystemAdminWorkAreaJPanel){
+                SystemAdminWorkAreaJPanel systemAdminWorkAreaJPanel= (SystemAdminWorkAreaJPanel) comp;
+                systemAdminWorkAreaJPanel.populateTree();
+            }
+        }
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnModifyCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyCustActionPerformed
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnModifyCustActionPerformed
+        int selectedRowIndex = tblRestaurants.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(this, "Please select a row");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) tblRestaurants.getModel();
+        String name = txtName.getText();
+        String restaurantName = txtRestaurantName.getText();
+        String userName = txtUsername.getText();
+        long phoneNumber = Long.parseLong(txtPhoneNumber.getText());
+        String address = txtAddress.getText();
+        
+        ArrayList<Restaurant> restos = system.getRestaurantDirectory().returnAllRestaurants();
+        for(Restaurant r: restos)
+        {
+            if(r.getManagerName().equals(name))
+            {
+               r.returnUserAcc().setUsername(txtUsername.getText());
+               r.setManagerName(txtName.getText());
+               r.setRestaurantName(restaurantName);
+               r.setPhoneNumber(Long.parseLong(txtPhoneNumber.getText()));
+               r.setAddress(txtAddress.getText());
+               break;
+            }
+            
+        }
+        system.setRestaurantDirectory(restos);
+        JOptionPane.showMessageDialog(this, "Updated the details successfully");
+        txtName.setText("");txtUsername.setText("");txtRestaurantName.setText("");
+        txtAddress.setText("");txtPhoneNumber.setText("");
+        populateTable();
+    }//GEN-LAST:event_btnSubmitActionPerformed
 
-    private void btnAddCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustActionPerformed
+    private void txtPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneNumberActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddCustActionPerformed
+    }//GEN-LAST:event_txtPhoneNumberActionPerformed
+
+    private void txtAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAddressActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtAddressActionPerformed
+
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
+        // TODO add your handling code here:
+          int selectedRowIndex = tblRestaurants.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(this, "Please select a row to View");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) tblRestaurants.getModel();
+        Restaurant selectedRestaurant = (Restaurant)model.getValueAt(selectedRowIndex, 0);
+        txtName.setText("");
+        txtName.setText(selectedRestaurant.getManagerName());
+        txtUsername.setText("");
+        txtUsername.setText(selectedRestaurant.returnUserAcc().getUsername());
+        txtRestaurantName.setText("");
+        txtRestaurantName.setText(selectedRestaurant.getRestaurantName());
+        txtAddress.setText("");
+        txtAddress.setText(selectedRestaurant.getAddress());
+        txtPhoneNumber.setText("");
+        txtPhoneNumber.setText(String.valueOf(selectedRestaurant.getPhoneNumber()));
+    }//GEN-LAST:event_btnViewActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        // TODO add your handling code here:
+         int selectedRowIndex = tblRestaurants.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) tblRestaurants.getModel();
+        Restaurant selectedRestaurant = (Restaurant)model.getValueAt(selectedRowIndex, 0);
+        // First delete the customer from employee
+        this.system.getEmployeeDirectory().deleteEmployee(selectedRestaurant.getManagerName());
+        // And thne delete the userAccount
+        this.system.getUserAccountDirectory().deleteUserAccount(
+                this.system.getRestaurantDirectory().returnAllRestaurants().
+                        get(selectedRowIndex).returnUserAcc()
+        );
+        // finally delete the user from customer directory
+        this.system.getRestaurantDirectory().removeRestaurant(selectedRestaurant);
+        
+        JOptionPane.showMessageDialog(this, "Deleted the restaurant Successfully");
+        for(Customer ck : this.system.getCustomerDirectory().returnCustomerDetails()){
+            System.out.println(ck.getName());
+        }
+        this.populateTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddCust;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnDeleteCust;
-    private javax.swing.JButton btnModifyCust;
-    private javax.swing.JButton btnViewCust;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnSubmit;
+    private javax.swing.JButton btnView;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lblCAddress;
-    private javax.swing.JLabel lblCID;
-    private javax.swing.JLabel lblCMobile;
-    private javax.swing.JLabel lblCName;
-    private javax.swing.JLabel lblCPwd;
-    private javax.swing.JLabel lblCUserName;
+    private javax.swing.JLabel lbName;
+    private javax.swing.JLabel lbPassword;
+    private javax.swing.JLabel lbPassword1;
+    private javax.swing.JLabel lbRestaurant;
+    private javax.swing.JLabel lbUsername;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JTextField txtCAddress;
-    private javax.swing.JTextField txtCID;
-    private javax.swing.JTextField txtCMobile;
-    private javax.swing.JTextField txtCName;
-    private javax.swing.JTextField txtCPwd;
-    private javax.swing.JTextField txtCUserName;
+    private javax.swing.JTable tblRestaurants;
+    private javax.swing.JTextField txtAddress;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPhoneNumber;
+    private javax.swing.JTextField txtRestaurantName;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+
+    private void populateTable(){
+        System.out.println("Inside method to populate Restaurant details table");
+        DefaultTableModel model = (DefaultTableModel) tblRestaurants.getModel();
+        model.setRowCount(0);
+
+        for(Restaurant rest : this.system.getRestaurantDirectory().returnAllRestaurants()){
+            System.out.println(rest);
+            Object[] row = new Object[5];
+            row[0] = rest;
+            row[1] = rest.getManagerName();
+            row[2] = rest.returnUserAcc().getUsername();
+            row[3] = String.valueOf(rest.getPhoneNumber());
+            row[4] = rest.getAddress();
+            model.addRow(row);
+        }
+    }
+
 }

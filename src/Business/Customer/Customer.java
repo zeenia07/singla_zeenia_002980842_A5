@@ -12,36 +12,20 @@ import Business.UserAccount.UserAccount;
  * @author harold
  */
 public class Customer {
-    private String name;
-    private long mobileNO;
-    private String address;
-    private String userName;
-    private String password;
-    UserAccount user;
     
-    public Customer(UserAccount user) {
-        this.user=user;
-        this.name = name;
-        this.mobileNO = mobileNO;
-        this.address = address;
-        this.userName = userName;
-        this.password = password;
+    private String name;
+    private String userName;
+    private String userPassword;
+    private long phoneNumber;
+    private String address;
+    UserAccount userAccount;
+
+    public long getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public long getMobileNO() {
-        return mobileNO;
-    }
-
-    public void setMobileNO(long mobileNO) {
-        this.mobileNO = mobileNO;
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getAddress() {
@@ -52,6 +36,33 @@ public class Customer {
         this.address = address;
     }
 
+    public UserAccount getUa() {
+        return userAccount;
+    }
+
+    public void setUa(UserAccount userAccount) {
+        this.userAccount = userAccount;
+    }
+    
+    public Customer(UserAccount userAccount){
+       this.userAccount = userAccount; 
+       this.name = userAccount.getEmployee().getName();
+       this.userName = userAccount.getUsername();
+       this.userPassword = userAccount.getPassword();
+    }
+    
+    public UserAccount returnUserAccount(){
+        return this.userAccount;
+    }
+    
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -60,21 +71,18 @@ public class Customer {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    
-    public UserAccount returnUserAccount(){
-        return this.user;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
     
     @Override
     public String toString(){
         return name;
     }
+    
     
 }

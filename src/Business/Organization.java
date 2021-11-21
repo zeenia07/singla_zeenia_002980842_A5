@@ -47,18 +47,13 @@ public abstract class Organization {
         ++counter;
     }
     public Organization(){
-        
+       
     }
     public abstract ArrayList<Role> getSupportedRole();
     
     public UserAccountDirectory getUserAccountDirectory() {
         return userAccountDirectory;
     }
-
-    public void setUserAccountDirectory(UserAccountDirectory userAccountDirectory) {
-        this.userAccountDirectory = userAccountDirectory;
-    }
-    
 
     public int getOrganizationID() {
         return organizationID;

@@ -6,52 +6,51 @@
 package Business.Restaurant;
 
 import Business.UserAccount.UserAccount;
+import java.util.ArrayList;
 
 /**
  *
  * @author harold
  */
 public class Restaurant {
-    
-    private int restId;
-    private String name;
+    private String restaurantName;
     private String address;
-    private long phone;
-    private Menu menu;
     private String managerName;
-     private UserAccount restManager;
-     
-     public Restaurant(String restaurantName, String address,
+    private long phoneNumber;
+    private Menu itemMenu;
+    private UserAccount managerAccount;
+    
+    public Restaurant(String restaurantName, String address,
                 String managerName, long phoneNumber, UserAccount user) {
-        this.name = restaurantName;
+        this.restaurantName = restaurantName;
         this.address = address;
         this.managerName = managerName;
-        this.phone = phoneNumber;
-        this.restManager = user;
+        this.phoneNumber = phoneNumber;
+        this.managerAccount = user;
     }
-
-     public Restaurant(String name, String address, String managerName, long phoneNumber) {
-        //To change body of generated methods, choose Tools | Templates.
-        this.name = name;
+    
+    public Restaurant(String restaurantName, String address,
+                String managerName, int phoneNumber) {
+        this.restaurantName = restaurantName;
         this.address = address;
         this.managerName = managerName;
-        this.phone = phoneNumber;
+        this.phoneNumber = phoneNumber;
     }
 
-    public int getRestId() {
-        return restId;
+    public Menu getMenu() {
+        return itemMenu;
     }
 
-    public void setRestId(int restId) {
-        this.restId = restId;
+    public void setMenu(Menu newMenu) {
+        this.itemMenu = newMenu;
+    }
+    
+    public String getRestaurantName() {
+        return restaurantName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
     }
 
     public String getAddress() {
@@ -62,22 +61,6 @@ public class Restaurant {
         this.address = address;
     }
 
-    public long getPhone() {
-        return phone;
-    }
-
-    public void setPhone(long phone) {
-        this.phone = phone;
-    }
-
-    public Menu getMenu() {
-        return menu;
-    }
-
-    public void setMenu(Menu menu) {
-        this.menu = menu;
-    }
-
     public String getManagerName() {
         return managerName;
     }
@@ -85,14 +68,24 @@ public class Restaurant {
     public void setManagerName(String managerName) {
         this.managerName = managerName;
     }
-    
-     public UserAccount returnUserAccount(){
-        return this.restManager;
+
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
     
-     @Override
+    public UserAccount returnUserAcc(){
+        return this.managerAccount;
+    }
+    
+    @Override
     public String toString() {
-        return name;
+        return restaurantName;
     }
+
+    
     
 }

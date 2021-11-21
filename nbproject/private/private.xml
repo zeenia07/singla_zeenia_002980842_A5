@@ -3,16 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/NEU/AED/Assignments/Assignment%205/db4odemo/src/userinterface/SystemAdminWorkArea/SystemLoginPanel.java</file>
-            <file>file:/E:/NEU/AED/Assignments/Assignment%205/db4odemo/src/userinterface/SystemAdminWorkArea/ManageCustomersPanel.java</file>
-            <file>file:/E:/NEU/AED/Assignments/Assignment%205/db4odemo/src/Business/Employee/EmployeeDirectory.java</file>
-            <file>file:/E:/NEU/AED/Assignments/Assignment%205/db4odemo/src/Business/Employee/Employee.java</file>
-            <file>file:/E:/NEU/AED/Assignments/Assignment%205/db4odemo/src/Business/Restaurant/RestaurantDirectory.java</file>
-            <file>file:/E:/NEU/AED/Assignments/Assignment%205/db4odemo/src/Business/UserAccount/UserAccountDirectory.java</file>
-            <file>file:/E:/NEU/AED/Assignments/Assignment%205/db4odemo/src/userinterface/RestaurantAdminRole/AdminWorkAreaJPanel.java</file>
-            <file>file:/E:/NEU/AED/Assignments/Assignment%205/db4odemo/src/userinterface/RestaurantAdminRole/ManagerLoginPanel.java</file>
-            <file>file:/E:/NEU/AED/Assignments/Assignment%205/db4odemo/src/Business/Customer/CustomerDirectory.java</file>
-            <file>file:/E:/NEU/AED/Assignments/Assignment%205/db4odemo/src/userinterface/RestaurantAdminRole/ManageMenuPanel.java</file>
+            <file>file:/C:/Users/Dell/Downloads/db4odemo/src/Business/Customer/CustomerDirectory.java</file>
+            <file>file:/C:/Users/Dell/Downloads/db4odemo/src/Business/Employee/EmployeeDirectory.java</file>
+            <file>file:/C:/Users/Dell/Downloads/db4odemo/src/Business/Customer/Customer.java</file>
+            <file>file:/C:/Users/Dell/Downloads/db4odemo/src/userinterface/SystemAdminWorkArea/UpdateCustomerDetails.java</file>
         </group>
     </open-files>
 </project-private>

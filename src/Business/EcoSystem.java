@@ -8,11 +8,17 @@ package Business;
 
 import Business.Customer.CustomerDirectory;
 import Business.DeliveryMan.DeliveryManDirectory;
-import Business.Restaurant.Order;
-import Business.Restaurant.OrderDirectory;
+import Business.Order.Order;
+import Business.Order.OrderDirectory;
+import Business.Restaurant.Restaurant;
 import Business.Restaurant.RestaurantDirectory;
+import Business.Role.AdminRole;
+import Business.Role.CustomerRole;
+import Business.Role.DeliverManRole;
 import Business.Role.Role;
 import Business.Role.SystemAdminRole;
+import Business.UserAccount.UserAccount;
+import Business.UserAccount.UserAccountDirectory;
 import java.util.ArrayList;
 
 /**
@@ -26,33 +32,22 @@ public class EcoSystem extends Organization{
     private CustomerDirectory customerDirectory;
     private DeliveryManDirectory deliveryManDirectory;
     private OrderDirectory orderDirectory;
-    
-    public RestaurantDirectory getRestaurantDirectory() {
-        return restaurantDirectory;
-    }
 
-    public void setRestaurantDirectory(RestaurantDirectory restaurantDirectory) {
+    public EcoSystem(RestaurantDirectory restaurantDirectory, CustomerDirectory customerDirectory, DeliveryManDirectory deliveryManDirectory) {
+        
         this.restaurantDirectory = restaurantDirectory;
-    }
-
-    public CustomerDirectory getCustomerDirectory() {
-        return customerDirectory;
-    }
-
-    public void setCustomerDirectory(CustomerDirectory customerDirectory) {
         this.customerDirectory = customerDirectory;
-    }
-
-    public DeliveryManDirectory getDeliveryManDirectory() {
-        return deliveryManDirectory;
-    }
-
-    public void setDeliveryManDirectory(DeliveryManDirectory deliveryManDirectory) {
         this.deliveryManDirectory = deliveryManDirectory;
     }
     
-    public OrderDirectory getOrderDirectory(){
-        return this.orderDirectory;
+    public EcoSystem(RestaurantDirectory restaurantDirectory, 
+            CustomerDirectory customerDirectory, 
+            DeliveryManDirectory deliveryManDirectory, OrderDirectory orderDirectory) {
+       
+        this.restaurantDirectory = restaurantDirectory;
+        this.customerDirectory = customerDirectory;
+        this.deliveryManDirectory = deliveryManDirectory;
+        this.orderDirectory = orderDirectory;
     }
     
     public EcoSystem(){
@@ -61,15 +56,7 @@ public class EcoSystem extends Organization{
         this.restaurantDirectory = new RestaurantDirectory();
         this.deliveryManDirectory = new DeliveryManDirectory();
         this.orderDirectory = new OrderDirectory();
-    }
-
-    public EcoSystem(RestaurantDirectory restaurantDirectory, CustomerDirectory customerDirectory, DeliveryManDirectory deliveryManDirectory,
-            OrderDirectory orderDirectory) {
-
-        this.restaurantDirectory = restaurantDirectory;
-        this.customerDirectory = customerDirectory;
-        this.deliveryManDirectory = deliveryManDirectory;
-        this.orderDirectory=orderDirectory;
+       // networkList=new ArrayList<Network>();
     }
     
     public static EcoSystem getInstance(){
@@ -79,35 +66,58 @@ public class EcoSystem extends Organization{
         return business;
     }
     
-    @Override
-    public ArrayList<Role> getSupportedRole() {
-        ArrayList<Role> roleList=new ArrayList<Role>();
-        roleList.add(new SystemAdminRole());
-        return roleList;
-    }
-//    private EcoSystem(){
-//        super(null);
-//       // networkList=new ArrayList<Network>();
-//    }
-    
-
     
     public boolean checkIfUserIsUnique(String userName){
-       //
-       if(!this.getUserAccountDirectory().checkIfUsernameIsUnique(userName)){
-           return false;
-       }
+       UserAccountDirectory usersList = business.getUserAccountDirectory();
+        ArrayList<UserAccount> userAccounts = usersList.getUserAccountList();
+        
+        for(UserAccount ua : userAccounts)
+        {
+            if(ua.getUsername().equals(userName))
+                return false;
+        }
+        
        return true;
-       //return false;
+    }
+    
+    public CustomerDirectory getCustomerDirectory() {
+        return customerDirectory;
+    }
+    
+    public DeliveryManDirectory getDeliveryManDirectory(){
+        return deliveryManDirectory;
+    }
+    
+    public RestaurantDirectory getRestaurantDirectory(){
+        return restaurantDirectory;
+    }
+    
+    public void setRestaurantDirectory(ArrayList<Restaurant> rsList){
+        restaurantDirectory.setRestaurantDirectory(rsList);
+    }
+    
+    public OrderDirectory getOrderDirectory(){
+        return this.orderDirectory;
     }
     
     public int getLastOrderId(){
         int maxOrderId = 0;
-        for(Order o : this.orderDirectory.getOrderList()){
+        for(Order o : this.orderDirectory.getOrderDirectory()){
             if(o.getOrderId() > maxOrderId){
                maxOrderId = o.getOrderId();
             }
         }
         return maxOrderId;
     }
+    
+    @Override
+    public ArrayList<Role> getSupportedRole() {
+        ArrayList<Role> roleList=new ArrayList<Role>();
+        roleList.add(new SystemAdminRole());
+        roleList.add(new CustomerRole());
+        roleList.add(new AdminRole());
+        roleList.add(new DeliverManRole());
+        return roleList;
+    }
+    
 }

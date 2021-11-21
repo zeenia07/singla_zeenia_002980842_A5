@@ -11,42 +11,20 @@ package Business.Restaurant;
  */
 public class Item {
     
-    //private int itemId;
     private String itemName;
     private String itemType;
     private double price;
-    private String restName;
-
-    public Item( String itemName, String itemType, double price, String restName) {
-        //this.itemId = itemId;
+    private String restaurantName;
+    
+    public Item(String itemName, String itemType, double price, String restaurantName) {
         this.itemName = itemName;
         this.itemType = itemType;
         this.price = price;
-        this.restName=restName;
+        this.restaurantName = restaurantName;
     }
-
-    public String getRestName() {
-        return restName;
-    }
-
-    public void setRestName(String restName) {
-        this.restName = restName;
-    }
-
-//    public int getItemId() {
-//        return itemId;
-//    }
-//
-//    public void setItemId(int itemId) {
-//        this.itemId = itemId;
-//    }
 
     public String getItemName() {
         return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
     }
 
     public String getItemType() {
@@ -57,6 +35,10 @@ public class Item {
         this.itemType = itemType;
     }
 
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -64,5 +46,20 @@ public class Item {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public String getRestaurantName() {
+        return restaurantName;
+    }
+
+    public void setRestaurantName(String restaurantName) {
+        this.restaurantName = restaurantName;
+    }
+    
+    @Override
+    public String toString() {
+        return itemName;
+    }
+    
+
     
 }

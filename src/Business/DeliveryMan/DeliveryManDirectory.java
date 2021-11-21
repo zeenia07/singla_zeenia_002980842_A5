@@ -12,22 +12,23 @@ import java.util.ArrayList;
  * @author harold
  */
 public class DeliveryManDirectory {
-     ArrayList<DeliveryMan> deliveryList;
+    
+     ArrayList<DeliveryMan> dm;
     
     public DeliveryManDirectory(){
-        deliveryList = new ArrayList<DeliveryMan>();
+        dm = new ArrayList<DeliveryMan>();
     }
     
-    public void addDeliveryMan(DeliveryMan dm){
-        deliveryList.add(dm);
+    public void addDeliveryAgent(DeliveryMan c){
+        dm.add(c);
     }
     
-    public void deleteDeliveryMan(DeliveryMan dm){
-        deliveryList.remove(dm);
+    public void deleteDeliveryAgent(DeliveryMan c){
+        dm.remove(c);
     }
     
     public ArrayList<DeliveryMan> deliveryAgentDetails(){
-        return deliveryList;
+        return dm;
     }
     
 }

@@ -5,10 +5,17 @@
  */
 package userinterface.RestaurantAdminRole;
 
+import Business.DeliveryMan.DeliveryMan;
 import Business.EcoSystem;
-import Business.UserAccount.UserAccount;
+import Business.Order.Order;
+import Business.Restaurant.Restaurant;
 import java.awt.CardLayout;
+import java.awt.Component;
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 import userinterface.SystemAdminWorkArea.SystemAdminWorkAreaJPanel;
 
 /**
@@ -20,14 +27,40 @@ public class ManageOrdersPanel extends javax.swing.JPanel {
     /**
      * Creates new form ManageOrdersPanel
      */
-    private JPanel userProcessContainer;
-    private UserAccount account;
-    private EcoSystem ecosystem;
-    public ManageOrdersPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem) {
+    JPanel userProcessContainer;
+    EcoSystem ecosystem;
+    Restaurant restaurant;
+    public ManageOrdersPanel(JPanel userProcessContainer, EcoSystem ecosystem,
+                    Restaurant restaurant) {
         initComponents();
-        this.userProcessContainer = userProcessContainer;        
-        this.account = account;
+        this.userProcessContainer = userProcessContainer;
         this.ecosystem = ecosystem;
+        this.restaurant = restaurant;  
+        this.populateOrdersTable();
+        ArrayList<String> deliveryList = new ArrayList();
+        for (DeliveryMan dm : this.ecosystem.getDeliveryManDirectory().deliveryAgentDetails()){
+            deliveryList.add(dm.getName());
+        }
+        comboDelivery.setModel(new DefaultComboBoxModel<String>(deliveryList.toArray(new String[0])));
+    }
+    
+    private void populateOrdersTable(){
+
+        DefaultTableModel model = (DefaultTableModel) tblOrders.getModel();
+        model.setRowCount(0);
+        for(Order o : this.ecosystem.getOrderDirectory().getOrderDirectory()){
+            if(o.getRestaurant().getRestaurantName().equals(this.restaurant.getRestaurantName())){
+                System.out.println(o);
+                Object[] row = new Object[5];
+                row[0] = o;
+                row[1] = o.getItem().getItemName();
+                
+                row[2] = o.getRequestDate();
+                row[3] = o.getOrderStatus();
+                model.addRow(row);
+            }
+        }
+        
     }
 
     /**
@@ -39,32 +72,68 @@ public class ManageOrdersPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTitle = new javax.swing.JLabel();
+        btnAccept = new javax.swing.JButton();
+        btnReject = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblOrders = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        comboOrderId = new javax.swing.JComboBox();
+        jLabel5 = new javax.swing.JLabel();
+        comboDelivery = new javax.swing.JComboBox();
+        btnAssignDeliveryAgent = new javax.swing.JButton();
         btnBack = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tblManageOrders = new javax.swing.JTable();
-        comboAssignDeliveryMan = new javax.swing.JComboBox<>();
-        btnAssignDelivery = new javax.swing.JButton();
-        txtOrderItem = new javax.swing.JTextField();
-        lblOrderPrice = new javax.swing.JLabel();
-        txtOrderPrice = new javax.swing.JTextField();
-        lblOrderID = new javax.swing.JLabel();
-        txtOrderID = new javax.swing.JTextField();
-        lblCustID = new javax.swing.JLabel();
-        lblOrderItem = new javax.swing.JLabel();
-        txtCustID = new javax.swing.JTextField();
-        btnViewCust = new javax.swing.JButton();
-        comboOrderStatus = new javax.swing.JComboBox<>();
-        lblOrderStatus = new javax.swing.JLabel();
+        btnRefreshOrders = new javax.swing.JButton();
+        lblTitle = new javax.swing.JLabel();
+        lblTitle1 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 0, 51));
 
-        lblTitle.setBackground(new java.awt.Color(102, 255, 255));
-        lblTitle.setFont(new java.awt.Font("Sitka Small", 1, 24)); // NOI18N
-        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("Manage Orders");
-        lblTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAccept.setText("Accept Order");
+        btnAccept.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAcceptActionPerformed(evt);
+            }
+        });
+
+        btnReject.setText("Reject Order");
+        btnReject.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRejectActionPerformed(evt);
+            }
+        });
+
+        tblOrders.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "OrderId", "ItemName", "Order Date", "Order Status"
+            }
+        ));
+        jScrollPane2.setViewportView(tblOrders);
+
+        jLabel4.setText("Order Id :");
+
+        comboOrderId.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel5.setText("Delivery Agent Name :");
+
+        comboDelivery.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboDelivery.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboDeliveryActionPerformed(evt);
+            }
+        });
+
+        btnAssignDeliveryAgent.setText("Assign");
+        btnAssignDeliveryAgent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAssignDeliveryAgentActionPerformed(evt);
+            }
+        });
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -73,59 +142,26 @@ public class ManageOrdersPanel extends javax.swing.JPanel {
             }
         });
 
-        tblManageOrders.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Order ID", "Order Items", "Order Price", "Customer ID", "Contact No.", "Delivery Address"
-            }
-        ));
-        jScrollPane1.setViewportView(tblManageOrders);
-
-        comboAssignDeliveryMan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        comboAssignDeliveryMan.addActionListener(new java.awt.event.ActionListener() {
+        btnRefreshOrders.setText("Refresh");
+        btnRefreshOrders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                comboAssignDeliveryManActionPerformed(evt);
+                btnRefreshOrdersActionPerformed(evt);
             }
         });
 
-        btnAssignDelivery.setText("Assign Delivery Man");
-        btnAssignDelivery.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAssignDeliveryActionPerformed(evt);
-            }
-        });
+        lblTitle.setBackground(new java.awt.Color(102, 255, 255));
+        lblTitle.setFont(new java.awt.Font("Sitka Small", 1, 24)); // NOI18N
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("Manage Orders");
+        lblTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        txtOrderItem.setEditable(false);
-
-        lblOrderPrice.setText("Order Price:");
-
-        txtOrderPrice.setEditable(false);
-
-        lblOrderID.setText("Order ID:");
-
-        txtOrderID.setEditable(false);
-
-        lblCustID.setText("Customer ID:");
-
-        lblOrderItem.setText("Order Items:");
-
-        txtCustID.setEditable(false);
-
-        btnViewCust.setText("View");
-        btnViewCust.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewCustActionPerformed(evt);
-            }
-        });
-
-        comboOrderStatus.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Accepted", "Rejected" }));
-
-        lblOrderStatus.setText("Order Status:");
+        lblTitle1.setBackground(new java.awt.Color(102, 255, 255));
+        lblTitle1.setFont(new java.awt.Font("Sitka Small", 1, 24)); // NOI18N
+        lblTitle1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle1.setText("Assign Delivery");
+        lblTitle1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblTitle1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -133,125 +169,190 @@ public class ManageOrdersPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnViewCust)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 9, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(188, 188, 188)
+                        .addGap(469, 469, 469)
+                        .addComponent(btnAccept))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(btnRefreshOrders, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(lblOrderPrice)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBack)
+                        .addGap(90, 90, 90))
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtOrderPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(lblOrderID)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(lblOrderItem)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(txtOrderItem, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btnReject)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addComponent(lblTitle1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(214, 214, 214)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblCustID)
-                            .addComponent(lblOrderStatus))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboOrderStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(comboAssignDeliveryMan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnAssignDelivery))
-                                .addComponent(txtCustID, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(btnAssignDeliveryAgent)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5))
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(comboDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(comboOrderId, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(72, 72, 72)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 730, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 177, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnBack)
-                .addGap(32, 32, 32)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(btnRefreshOrders))
+                .addGap(30, 30, 30)
                 .addComponent(lblTitle)
-                .addGap(36, 36, 36)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(btnViewCust)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblOrderID)
-                    .addComponent(txtOrderID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(btnAccept)
+                    .addComponent(btnReject))
+                .addGap(30, 30, 30)
+                .addComponent(lblTitle1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblOrderItem)
-                    .addComponent(txtOrderItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblOrderPrice)
-                    .addComponent(txtOrderPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4)
+                    .addComponent(comboOrderId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCustID)
-                    .addComponent(txtCustID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboOrderStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblOrderStatus))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(comboAssignDeliveryMan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAssignDelivery))
-                .addGap(26, 26, 26))
+                    .addComponent(jLabel5)
+                    .addComponent(comboDelivery, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addComponent(btnAssignDeliveryAgent)
+                .addContainerGap(143, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-       AdminWorkAreaJPanel  adminWorkAreaJPanel = new AdminWorkAreaJPanel(userProcessContainer, account, ecosystem);
-       userProcessContainer.add("adminWorkAreaJPanel", adminWorkAreaJPanel);
-       CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-       layout.next(userProcessContainer);
+        this.userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+        Component[] comps = this.userProcessContainer.getComponents();
+        for(Component comp : comps){
+            if(comp instanceof SystemAdminWorkAreaJPanel){
+                SystemAdminWorkAreaJPanel systemAdminWorkAreaJPanel= (SystemAdminWorkAreaJPanel) comp;
+                systemAdminWorkAreaJPanel.populateTree();
+            }
+        }
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnAssignDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignDeliveryActionPerformed
+    private void comboDeliveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboDeliveryActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAssignDeliveryActionPerformed
+    }//GEN-LAST:event_comboDeliveryActionPerformed
 
-    private void btnViewCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewCustActionPerformed
+    private void btnAcceptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAcceptActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewCustActionPerformed
+        int selectedRow = tblOrders.getSelectedRow();
+        if(selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,"Please Select a row from table.", "Warining", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        Order order = (Order)tblOrders.getValueAt(selectedRow, 0);
+        if(order.getOrderStatus().equals("Order Placed")) {
+            order.setOrderStatus("Order Accepted");
+        }
+        
+        else {
+            JOptionPane.showMessageDialog(null, "Order is already accepted or Completed");
+            return;
+        }
+        
+        this.populateOrdersTable();
+        
 
-    private void comboAssignDeliveryManActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboAssignDeliveryManActionPerformed
+    }//GEN-LAST:event_btnAcceptActionPerformed
+
+    private void btnRefreshOrdersActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefreshOrdersActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_comboAssignDeliveryManActionPerformed
+        ArrayList<String> orderArr = new ArrayList<String>();
+        for (Order o : this.ecosystem.getOrderDirectory().getOrderDirectory()){
+            if(o.getOrderStatus().equals("Order Accepted")){
+                orderArr.add(String.valueOf(o.getOrderId()));
+            }
+            
+        }
+        comboOrderId.setModel(new DefaultComboBoxModel<String>(orderArr.toArray(new String[0])));
+    }//GEN-LAST:event_btnRefreshOrdersActionPerformed
+
+    private void btnAssignDeliveryAgentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAssignDeliveryAgentActionPerformed
+        // TODO add your handling code here:
+        try{
+            int orderId = Integer.parseInt(comboOrderId.getSelectedItem().toString());
+            Order order = this.ecosystem.getOrderDirectory().getOrderId(orderId);
+            if(order.getOrderStatus().equals("Order Accepted")) {
+                order.setOrderStatus("Delivery Assigned");
+                order.setDeliveryMan(comboDelivery.getSelectedItem().toString());
+                order.setSender(this.ecosystem.getUserAccountDirectory().getUserAccount(comboDelivery.getSelectedItem().toString()));
+                JOptionPane.showMessageDialog(null, "Assigned the Delivery Agent Successfully");
+            }
+
+            else {
+                JOptionPane.showMessageDialog(null, "Order is already accepted or Completed");
+                return;
+            }
+
+            this.populateOrdersTable();
+        }catch(NullPointerException e){
+                JOptionPane.showMessageDialog(null, "No Order to assign!!!");
+                return;
+            }
+        catch(NumberFormatException pk){
+                JOptionPane.showMessageDialog(null, "Please accept orders and Refersh the order-ids!!!");
+                return;
+            }
+        
+    }//GEN-LAST:event_btnAssignDeliveryAgentActionPerformed
+
+    private void btnRejectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRejectActionPerformed
+        // TODO add your handling code here:
+        int selectedRow = tblOrders.getSelectedRow();
+        if(selectedRow < 0) {
+            JOptionPane.showMessageDialog(null,"Please Select a row from table first", "Warining", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        Order order = (Order)tblOrders.getValueAt(selectedRow, 0);
+        if(order.getOrderStatus().equals("Order Placed")) {
+            order.setOrderStatus("Order Rejected");
+        }
+        
+        else {
+            JOptionPane.showMessageDialog(null, "Order is already accepted or Completed");
+            return;
+        }
+        
+        this.populateOrdersTable();
+    }//GEN-LAST:event_btnRejectActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAssignDelivery;
+    private javax.swing.JButton btnAccept;
+    private javax.swing.JButton btnAssignDeliveryAgent;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnViewCust;
-    private javax.swing.JComboBox<String> comboAssignDeliveryMan;
-    private javax.swing.JComboBox<String> comboOrderStatus;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblCustID;
-    private javax.swing.JLabel lblOrderID;
-    private javax.swing.JLabel lblOrderItem;
-    private javax.swing.JLabel lblOrderPrice;
-    private javax.swing.JLabel lblOrderStatus;
+    private javax.swing.JButton btnRefreshOrders;
+    private javax.swing.JButton btnReject;
+    private javax.swing.JComboBox comboDelivery;
+    private javax.swing.JComboBox comboOrderId;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JTable tblManageOrders;
-    private javax.swing.JTextField txtCustID;
-    private javax.swing.JTextField txtOrderID;
-    private javax.swing.JTextField txtOrderItem;
-    private javax.swing.JTextField txtOrderPrice;
+    private javax.swing.JLabel lblTitle1;
+    private javax.swing.JTable tblOrders;
     // End of variables declaration//GEN-END:variables
 }

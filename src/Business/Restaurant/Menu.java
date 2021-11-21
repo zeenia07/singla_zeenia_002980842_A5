@@ -5,7 +5,8 @@
  */
 package Business.Restaurant;
 
-import java.util.List;
+import Business.Restaurant.Item;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,26 +14,26 @@ import java.util.List;
  */
 public class Menu {
     
-    private List<Item> itemList;
-
+    private ArrayList<Item> itemList;
+    
     public Menu() {
+        itemList = new ArrayList();
     }
 
-    public List<Item> getItemList() {
+    public ArrayList<Item> getMenu() {
         return itemList;
     }
 
-    public void setItemList(List<Item> itemList) {
+    public void setMenu(ArrayList<Item> itemList) {
         this.itemList = itemList;
     }
     
-    public void addItem(String itemName, String itemType, double price, String restName){
-        Item addItem = new Item(itemName,itemType, price, restName);
-        itemList.add(addItem);
+    public void addItem(String itemName, String itemType, double price, String res) {
+        Item newItem = new Item(itemName, itemType, price, res);
+        itemList.add(newItem);
     }
     
-     public void deleteItem(Item item) {
+    public void removeItem(Item item) {
         itemList.remove(item);
     }
-    
 }

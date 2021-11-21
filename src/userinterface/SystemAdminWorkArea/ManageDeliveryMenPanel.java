@@ -5,11 +5,15 @@
  */
 package userinterface.SystemAdminWorkArea;
 
+import Business.Customer.Customer;
 import Business.DeliveryMan.DeliveryMan;
 import Business.EcoSystem;
-import Business.UserAccount.UserAccount;
 import java.awt.CardLayout;
+import java.awt.Component;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -18,19 +22,16 @@ import javax.swing.JPanel;
 public class ManageDeliveryMenPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form ManageDeliveryMenPanel
+     * Creates new form UpdateCustomerDetails
      */
-    private JPanel userProcessContainer;
-    private UserAccount account;
-    private EcoSystem ecosystem;
-    private DeliveryMan deliveryMan;
-    public ManageDeliveryMenPanel(JPanel userProcessContainer, UserAccount account, EcoSystem ecosystem) {
+    JPanel userProcessContainer;
+    EcoSystem system;
+    
+    public ManageDeliveryMenPanel(JPanel userProcessContainer, EcoSystem system) {
         initComponents();
-        this.userProcessContainer = userProcessContainer;        
-        this.account = account;
-        this.ecosystem = ecosystem;
-        //populateTable();
-        //populateComboBox();
+        this.system = system;
+        this.userProcessContainer = userProcessContainer;
+        this.populateTable();
     }
 
     /**
@@ -42,35 +43,71 @@ public class ManageDeliveryMenPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblTitle = new javax.swing.JLabel();
-        btnBack = new javax.swing.JButton();
-        btnDeleteCust = new javax.swing.JButton();
-        btnViewCust = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        lblCMobile = new javax.swing.JLabel();
-        lblCName = new javax.swing.JLabel();
-        txtCMobile = new javax.swing.JTextField();
-        txtCName = new javax.swing.JTextField();
-        lblCAddress = new javax.swing.JLabel();
-        lblCUserName = new javax.swing.JLabel();
-        txtCAddress = new javax.swing.JTextField();
-        txtCUserName = new javax.swing.JTextField();
-        lblCID = new javax.swing.JLabel();
-        txtCID = new javax.swing.JTextField();
-        btnAddCust = new javax.swing.JButton();
-        lblCPwd = new javax.swing.JLabel();
-        btnModifyCust = new javax.swing.JButton();
-        txtCPwd = new javax.swing.JTextField();
+        tblDeliveryUsers = new javax.swing.JTable();
+        btnView = new javax.swing.JButton();
+        btnDelete = new javax.swing.JButton();
+        txtUsername = new javax.swing.JTextField();
+        btnSubmit = new javax.swing.JButton();
+        lbPassword = new javax.swing.JLabel();
+        lbName = new javax.swing.JLabel();
+        txtName = new javax.swing.JTextField();
+        lbUsername = new javax.swing.JLabel();
+        btnBack = new javax.swing.JButton();
+        lbUsername1 = new javax.swing.JLabel();
+        txtAddress = new javax.swing.JTextField();
+        txtPhoneNumber = new javax.swing.JTextField();
+        lbUsername2 = new javax.swing.JLabel();
+        comboStatus = new javax.swing.JComboBox();
+        lblTitle = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(204, 0, 51));
 
-        lblTitle.setBackground(new java.awt.Color(102, 255, 255));
-        lblTitle.setFont(new java.awt.Font("Sitka Small", 1, 24)); // NOI18N
-        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblTitle.setText("Manage Delivery Men");
-        lblTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        lblTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        tblDeliveryUsers.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Name", "UserName", "Status", "Address", "PhoneNumber"
+            }
+        ));
+        jScrollPane1.setViewportView(tblDeliveryUsers);
+
+        btnView.setText("View");
+        btnView.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnViewActionPerformed(evt);
+            }
+        });
+
+        btnDelete.setText("Delete");
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
+
+        txtUsername.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtUsernameActionPerformed(evt);
+            }
+        });
+
+        btnSubmit.setText("Update");
+        btnSubmit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubmitActionPerformed(evt);
+            }
+        });
+
+        lbPassword.setText("Status :");
+
+        lbName.setText("Name :");
+
+        lbUsername.setText("Username :");
 
         btnBack.setText("Back");
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -79,115 +116,79 @@ public class ManageDeliveryMenPanel extends javax.swing.JPanel {
             }
         });
 
-        btnDeleteCust.setText("Delete");
-        btnDeleteCust.addActionListener(new java.awt.event.ActionListener() {
+        lbUsername1.setText("Address :");
+
+        txtAddress.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteCustActionPerformed(evt);
+                txtAddressActionPerformed(evt);
             }
         });
 
-        btnViewCust.setText("View");
-        btnViewCust.addActionListener(new java.awt.event.ActionListener() {
+        txtPhoneNumber.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnViewCustActionPerformed(evt);
+                txtPhoneNumberActionPerformed(evt);
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Delivery Man ID", "Name", "User Name", "Password", "Mobile Number", "Address"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        lbUsername2.setText("Phone Number :");
 
-        lblCMobile.setText("Mobile Number: ");
+        comboStatus.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Available", "Not Available" }));
 
-        lblCName.setText("Name:");
-
-        lblCAddress.setText("Address: ");
-
-        lblCUserName.setText("User Name:");
-
-        lblCID.setText("Delivery Man ID:");
-
-        btnAddCust.setText("Create");
-        btnAddCust.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddCustActionPerformed(evt);
-            }
-        });
-
-        lblCPwd.setText("Password:");
-
-        btnModifyCust.setText("Modify");
-        btnModifyCust.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnModifyCustActionPerformed(evt);
-            }
-        });
+        lblTitle.setBackground(new java.awt.Color(102, 255, 255));
+        lblTitle.setFont(new java.awt.Font("Sitka Small", 1, 24)); // NOI18N
+        lblTitle.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTitle.setText("Manage Delivery Men");
+        lblTitle.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lblTitle.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGap(185, 185, 185)
+                .addGap(359, 359, 359)
+                .addComponent(btnSubmit)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(127, 127, 127)
-                            .addComponent(btnAddCust)
-                            .addGap(31, 31, 31)
-                            .addComponent(btnModifyCust)
-                            .addGap(28, 28, 28)
-                            .addComponent(btnDeleteCust))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(51, 51, 51)
-                            .addComponent(lblCAddress)
-                            .addGap(18, 18, 18)
-                            .addComponent(txtCAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(204, 204, 204)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lbUsername)
+                            .addComponent(lbName))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                            .addComponent(txtUsername)))
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(36, 36, 36)
-                                .addComponent(lblCUserName)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(231, 231, 231)
+                            .addComponent(lbPassword)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addGap(169, 169, 169)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblCID)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtCID, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblCName)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtCName, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCMobile)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtCMobile, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblCPwd)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtCPwd, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(lbUsername1)
+                                .addComponent(lbUsername2))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                                .addComponent(txtPhoneNumber)))))
+                .addContainerGap(287, Short.MAX_VALUE))
+            .addComponent(lblTitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnView, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(btnDelete))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnBack, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnViewCust, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 770, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnBack)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -195,90 +196,182 @@ public class ManageDeliveryMenPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addComponent(btnBack)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTitle)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnViewCust)
-                .addGap(32, 32, 32)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCID)
-                    .addComponent(txtCID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCName)
-                    .addComponent(txtCName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCUserName)
-                    .addComponent(txtCUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnDelete)
+                    .addComponent(btnView))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCPwd)
-                    .addComponent(txtCPwd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbName))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCMobile)
-                    .addComponent(txtCMobile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtUsername, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbUsername))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCAddress)
-                    .addComponent(txtCAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbUsername1))
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAddCust)
-                    .addComponent(btnModifyCust)
-                    .addComponent(btnDeleteCust))
-                .addGap(32, 32, 32))
+                    .addComponent(txtPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbUsername2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbPassword)
+                    .addComponent(comboStatus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(btnSubmit)
+                .addContainerGap(90, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtUsernameActionPerformed
+
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
-       SystemAdminWorkAreaJPanel  systemAdminWorkAreaJPanel = new SystemAdminWorkAreaJPanel(userProcessContainer, account, ecosystem);
-       userProcessContainer.add("systemAdminWorkAreaJPanel", systemAdminWorkAreaJPanel);
-       CardLayout layout = (CardLayout) userProcessContainer.getLayout();
-       layout.next(userProcessContainer);
+        this.userProcessContainer.remove(this);
+        CardLayout layout = (CardLayout) userProcessContainer.getLayout();
+        layout.previous(userProcessContainer);
+        Component[] comps = this.userProcessContainer.getComponents();
+        for(Component comp : comps){
+            if(comp instanceof SystemAdminWorkAreaJPanel){
+                SystemAdminWorkAreaJPanel systemAdminWorkAreaJPanel= (SystemAdminWorkAreaJPanel) comp;
+                systemAdminWorkAreaJPanel.populateTree();
+            }
+        }
     }//GEN-LAST:event_btnBackActionPerformed
 
-    private void btnDeleteCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCustActionPerformed
+    private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnDeleteCustActionPerformed
+        int selectedRowIndex = tblDeliveryUsers.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(this, "Please select a row");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) tblDeliveryUsers.getModel();
+        String name = txtName.getText();
+        String userName = txtUsername.getText();
+        String status = comboStatus.getSelectedItem().toString();
+        String address = txtAddress.getText();
+        long phoneNumber = Long.parseLong(txtPhoneNumber.getText());
+        
+        ArrayList<DeliveryMan> restos = system.getDeliveryManDirectory().deliveryAgentDetails();
+        for(DeliveryMan r: restos)
+        {
+            if(r.getName().equals(name))
+            {
+               r.getUserAccount().setUsername(userName);
+               r.setStatus(status);
+               r.setPhoneNumber(Long.parseLong(txtPhoneNumber.getText()));
+               r.setAddress(txtAddress.getText());
+               break;
+            }
+            
+        }
+        JOptionPane.showMessageDialog(this, "Updated the DeliveryMan Details");
+        txtName.setText("");txtUsername.setText("");
+        txtAddress.setText("");txtPhoneNumber.setText("");
+        populateTable();
+    }//GEN-LAST:event_btnSubmitActionPerformed
 
-    private void btnViewCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewCustActionPerformed
+    private void btnViewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViewActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnViewCustActionPerformed
+        int selectedRowIndex = tblDeliveryUsers.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(this, "Please select a row to View");
+            return;
+        }
+        DefaultTableModel model = (DefaultTableModel) tblDeliveryUsers.getModel();
+        DeliveryMan selectedDeliveryAgent = (DeliveryMan)model.getValueAt(selectedRowIndex, 0);
+        txtName.setText("");
+        txtName.setText(selectedDeliveryAgent.getName());
+        txtUsername.setText("");
+        txtUsername.setText(selectedDeliveryAgent.getUserAccount().getUsername());
+        comboStatus.setSelectedItem(selectedDeliveryAgent.getStatus());
+        txtAddress.setText("");
+        txtAddress.setText(selectedDeliveryAgent.getAddress());
+        txtPhoneNumber.setText("");
+        txtPhoneNumber.setText(String.valueOf(selectedDeliveryAgent.getPhoneNumber()));
+    }//GEN-LAST:event_btnViewActionPerformed
 
-    private void btnAddCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCustActionPerformed
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddCustActionPerformed
+        int selectedRowIndex = tblDeliveryUsers.getSelectedRow();
+        if(selectedRowIndex < 0){
+            JOptionPane.showMessageDialog(this, "Please select a row to delete");
+            return;
+        }
+         DefaultTableModel model = (DefaultTableModel) tblDeliveryUsers.getModel();
+        DeliveryMan selectedDeliveryAgent = (DeliveryMan)model.getValueAt(selectedRowIndex, 0);
+        // First delete the customer from employee
+        this.system.getEmployeeDirectory().deleteEmployee(selectedDeliveryAgent.getName());
+        // And thne delete the userAccount
+        this.system.getUserAccountDirectory().deleteUserAccount(
+                this.system.getDeliveryManDirectory().deliveryAgentDetails().
+                        get(selectedRowIndex).getUserAccount()
+        );
+        // finally delete the user from customer directory
+        this.system.getDeliveryManDirectory().deleteDeliveryAgent(selectedDeliveryAgent);
+        
+        JOptionPane.showMessageDialog(this, "Deleted the entry Successfully");
+        for(DeliveryMan ck : this.system.getDeliveryManDirectory().deliveryAgentDetails()){
+            System.out.println(ck.getName());
+        }
+        this.populateTable();
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
-    private void btnModifyCustActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModifyCustActionPerformed
+    private void txtAddressActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAddressActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnModifyCustActionPerformed
+    }//GEN-LAST:event_txtAddressActionPerformed
+
+    private void txtPhoneNumberActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPhoneNumberActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPhoneNumberActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAddCust;
     private javax.swing.JButton btnBack;
-    private javax.swing.JButton btnDeleteCust;
-    private javax.swing.JButton btnModifyCust;
-    private javax.swing.JButton btnViewCust;
+    private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnSubmit;
+    private javax.swing.JButton btnView;
+    private javax.swing.JComboBox comboStatus;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JLabel lblCAddress;
-    private javax.swing.JLabel lblCID;
-    private javax.swing.JLabel lblCMobile;
-    private javax.swing.JLabel lblCName;
-    private javax.swing.JLabel lblCPwd;
-    private javax.swing.JLabel lblCUserName;
+    private javax.swing.JLabel lbName;
+    private javax.swing.JLabel lbPassword;
+    private javax.swing.JLabel lbUsername;
+    private javax.swing.JLabel lbUsername1;
+    private javax.swing.JLabel lbUsername2;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JTextField txtCAddress;
-    private javax.swing.JTextField txtCID;
-    private javax.swing.JTextField txtCMobile;
-    private javax.swing.JTextField txtCName;
-    private javax.swing.JTextField txtCPwd;
-    private javax.swing.JTextField txtCUserName;
+    private javax.swing.JTable tblDeliveryUsers;
+    private javax.swing.JTextField txtAddress;
+    private javax.swing.JTextField txtName;
+    private javax.swing.JTextField txtPhoneNumber;
+    private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
+    private void populateTable(){
+        System.out.println("Inside method to populate Delivery person details");
+        DefaultTableModel model = (DefaultTableModel) tblDeliveryUsers.getModel();
+        model.setRowCount(0);
+
+        for(DeliveryMan dm : this.system.getDeliveryManDirectory().deliveryAgentDetails()){
+            System.out.println(dm);
+            Object[] row = new Object[5];
+            row[0] = dm;
+            row[1] = dm.getUserAccount().getUsername();
+            row[2] = dm.getAddress();
+            row[3] = dm.getPhoneNumber();
+            row[4] = dm.getStatus();
+            
+            model.addRow(row);
+        }
+    }
+
+
 }

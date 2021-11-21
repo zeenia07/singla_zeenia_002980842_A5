@@ -6,6 +6,7 @@
 package Business.DeliveryMan;
 
 import Business.UserAccount.UserAccount;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,15 +14,40 @@ import Business.UserAccount.UserAccount;
  */
 public class DeliveryMan {
     private String name;
-    private String address;
-    private long mobileNo;
     private String status;
-    UserAccount user;
+    private String address;
+    private long phoneNumber;
+    UserAccount userAccount;
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public long getPhoneNumber() {
+        return this.phoneNumber;
+    }
+
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+   
+
+    public UserAccount getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUa(UserAccount ua) {
+        this.userAccount = userAccount;
+    }
     
-     public DeliveryMan(UserAccount user)
+    public DeliveryMan(UserAccount ua)
     {
-        this.user = user;
-        this.name = user.getUsername();
+        this.userAccount= userAccount;
+        this.name = ua.getUsername();
     }
 
     public String getName() {
@@ -32,22 +58,6 @@ public class DeliveryMan {
         this.name = name;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public long getMobileNo() {
-        return mobileNo;
-    }
-
-    public void setMobileNo(long mobileNo) {
-        this.mobileNo = mobileNo;
-    }
-
     public String getStatus() {
         return status;
     }
@@ -56,11 +66,11 @@ public class DeliveryMan {
         this.status = status;
     }
 
+      
     @Override
     public String toString(){
         return name;
     }
-    
     
   
 }
