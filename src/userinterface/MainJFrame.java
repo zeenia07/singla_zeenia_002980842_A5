@@ -33,13 +33,10 @@ public class MainJFrame extends javax.swing.JFrame {
         system = dB4OUtil.retrieveSystem();
         if(system == null){
             system = EcoSystem.getInstance();
-            System.out.println("Created new instance");
+            
             
         }
-        System.out.println("***Inside Main frame *********");
-        System.out.println(system.getClass());
-        System.out.println(system.getEmployeeDirectory().getEmployeeList());
-//        System.out.println(system.getCustomerDirectory().returnCustomerDetails());
+        
 
         this.setSize(1680, 1050);
     }
@@ -148,7 +145,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 .authenticateUser(userNameGiven, passwordGiven);
         System.out.println(userData);
         if(userData == null){
-            JOptionPane.showMessageDialog(this, "Please enter Valid credentials");
+            JOptionPane.showMessageDialog(this, "Invalid credentials");
             userNameJTextField.setText("");
             passwordField.setText("");
         }

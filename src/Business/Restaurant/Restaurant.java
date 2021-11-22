@@ -6,6 +6,7 @@
 package Business.Restaurant;
 
 import Business.UserAccount.UserAccount;
+import Business.Menu.Menu;
 import java.util.ArrayList;
 
 /**

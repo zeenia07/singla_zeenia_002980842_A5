@@ -7,8 +7,8 @@ package Business.Order;
 
 import Business.Customer.Customer;
 import Business.DeliveryMan.DeliveryMan;
-import Business.Restaurant.Item;
-import Business.Restaurant.Menu;
+import Business.Menu.Item;
+import Business.Menu.Menu;
 import Business.Restaurant.Restaurant;
 import Business.WorkQueue.WorkRequest;
 import java.util.concurrent.atomic.AtomicInteger;
